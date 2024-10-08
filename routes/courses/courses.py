@@ -128,8 +128,9 @@ async def get_course_cover(course_id: int):
         'value': course_id
     }
     print(course_id)
-
+    
     async with aiohttp.ClientSession() as session:
+        
         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             courses = await response.json()
             print(courses)
@@ -147,6 +148,7 @@ async def get_course_cover(course_id: int):
                         return {"cover_image_url": f"{file['fileurl']}?token={Xetid_token}"}
             
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
+    
 
 # @courses_router.get("/course_url/{course_id}")
 # def get_course_url(course_id: int):

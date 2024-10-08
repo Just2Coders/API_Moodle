@@ -1,5 +1,5 @@
 from fastapi import APIRouter,HTTPException,Header
-from fastapi.responses import JSONResponse,Response
+from fastapi.responses import JSONResponse,Response,HTMLResponse
 from globals.variables import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url
 from typing import Annotated
 from controllers.validate_response import  validate_response
@@ -7,11 +7,13 @@ import aiohttp
 import requests
 # import os
 # import httpx
+# desglozar los parents de las categorias
+# corroutine error en get completetion
 
 course_user_router = APIRouter(prefix="/Course_user",tags=["Rutas que involucren relaciones de USUARIOS con CURSOS "])
 
 @course_user_router.post("/matricular")
-def enrol_user_in_course(userid:str, courseid:int, roleid:int = 0):
+async def enrol_user_in_course(userid:str, courseid:int, roleid:int = 0):
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'enrol_manual_enrol_users',
@@ -23,7 +25,7 @@ def enrol_user_in_course(userid:str, courseid:int, roleid:int = 0):
     }
     # comentando 
    
-
+    
     response = requests.post(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl =False)
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="Error al inscribir al usuario en el curso")
@@ -95,7 +97,6 @@ async def get_completed_courses(user_id: int):
     course_completion_status = await get_course_completion_status(user_id)
     completed_courses = []
     print(completed_courses)
-
     for course in course_completion_status['statuses']:
         if course['completionstatus']['completed']:
             activities_completion_status = await get_activities_completion_status(course['course']['id'], user_id)
@@ -108,6 +109,7 @@ async def get_completed_courses(user_id: int):
 
     return JSONResponse(content=completed_courses)
 async def get_course_completion_status(user_id):
+    
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'core_completion_get_course_completion_status',
@@ -118,24 +120,24 @@ async def get_course_completion_status(user_id):
        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
         print("get_course")
         print(response)
-        return response.json()
-@course_user_router.get("/user/{user_id}/completed_courses")
-async def get_completed_courses(user_id: int):
-    course_completion_status = await get_course_completion_status(user_id)
-    completed_courses = []
-    print(completed_courses)
+        return  await response.json()
+# @course_user_router.get("/user/{user_id}/completed_courses")
+# async def get_completed_courses(user_id: int):
+#     course_completion_status = await get_course_completion_status(user_id)
+#     completed_courses = []
+#     print(completed_courses)
 
-    for course in course_completion_status['statuses']:
-        if course['completionstatus']['completed']:
-            activities_completion_status = await get_activities_completion_status(course['course']['id'], user_id)
-            completed_activities = [activity for activity in activities_completion_status['statuses'] if activity['state'] == 1]
-            completed_courses.append({
-                'course_id': course['course']['id'],
-                'course_name': course['course']['fullname'],
-                'completed_activities': completed_activities
-            })
+#     for course in course_completion_status['statuses']:
+#         if course['completionstatus']['completed']:
+#             activities_completion_status = await get_activities_completion_status(course['course']['id'], user_id)
+#             completed_activities = [activity for activity in activities_completion_status['statuses'] if activity['state'] == 1]
+#             completed_courses.append({
+#                 'course_id': course['course']['id'],
+#                 'course_name': course['course']['fullname'],
+#                 'completed_activities': completed_activities
+#             })
 
-    return JSONResponse(content=completed_courses)
+#     return JSONResponse(content=completed_courses)
     # response = requests.post(url, data=params)
     # enrolled_users = response.json()
     # print(enrolled_users)
