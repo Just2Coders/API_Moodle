@@ -64,13 +64,13 @@ async def get_grades(workshop_id: int,moodlewsrestformat:Annotated[str,Header()]
             return await validate_response(response)
         
 @course_user_router.get("/mod_workshop_get_workshops")
-async def get_workshops(course_ids: list[int],moodlewsrestformat:Annotated[str,Header()]="json"):
+async def get_workshops(course_id: int,moodlewsrestformat:Annotated[str,Header()]="json"):
     async with aiohttp.ClientSession() as session:
         params = {
             "wstoken": Xetid_token,
             "wsfunction": "mod_workshop_get_workshops_by_courses",
             "moodlewsrestformat": moodlewsrestformat,
-            "courseids[]": course_ids
+            "courseids[0]": course_id
         }
         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl=False) as response:
             if response.status != 200:
