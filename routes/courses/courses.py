@@ -211,7 +211,7 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
     # params['wsfunction'] = 'core_course_get_contents'
     # params['courseid'] = courseid
     async with aiohttp.ClientSession() as session:
-        category = await obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
+        category = await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
         async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
@@ -256,36 +256,3 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
 #             return False
         
 # Función para verificar si el usuario está matriculado
-async def esta_matriculado(user_id, course_id):
-    params = {
-        'wstoken': Xetid_token,
-        'wsfunction': 'core_enrol_get_enrolled_users',
-        'moodlewsrestformat': 'json',
-        'courseid': course_id
-    }
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params) as response:
-            enrolled_users = await response.json()
-
-            # Verifica si el user_id está en la lista de usuarios matriculados
-            for user in enrolled_users:
-                if user["id"] == user_id:
-                    return True
-            return False
-
-
-# Función para matricular automáticamente al usuario
-async def matricular_usuario(user_id, course_id):
-    params = {
-        'wstoken': Xetid_token,
-        'wsfunction': 'enrol_manual_enrol_users',
-        'moodlewsrestformat': 'json',
-        'enrolments[0][roleid]': 5,  # Estudiante
-        'enrolments[0][userid]': user_id,
-        'enrolments[0][courseid]': course_id
-    }
-
-    async with aiohttp.ClientSession() as session:
-        await session.post(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params) 
-           
