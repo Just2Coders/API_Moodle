@@ -1,17 +1,17 @@
 from fastapi import APIRouter,HTTPException,Header
 from fastapi.responses import JSONResponse,Response
-from globals.variables import Admin_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url,Xetid_token,MOODLE_COURSE_URL
+from globals.Const import Admin_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url,Xetid_token,MOODLE_COURSE_URL
 from models.course_model import Course
 from typing import List,Annotated
 from controllers.validate_response import validate_response
 from jose import jwt,JWTError
+from functions import courses
 from routes.course_user_relations.course_user_relations import get_users_in_course
 import requests
 import aiohttp
 import dicttoxml
 # import asyncio
 import json
-
 import time
 courses_router = APIRouter(prefix="/Courses",tags=["Todas las rutas que involucren CURSOS de Moodle"])
 
@@ -59,30 +59,7 @@ async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='j
         return JSONResponse(content=course_list)
 
 #  Obtener los cursos para formar un directorio
-async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict):
-    params['wsfunction'] = 'core_course_get_courses'
-    async with session.get(url, params=params,ssl =False) as response:
-        if response.status != 200:
-            raise HTTPException(status_code=response.status, detail="Error al obtener los cursos de Moodle")
-        print(response)
-        return await response.json()
-#  Obtener categorias para formar un directorio
-async def obtener_categorias(session: aiohttp.ClientSession, url: str, params: dict):
-    params['wsfunction'] = 'core_course_get_categories'
-    async with session.get(url, params=params,ssl = False) as response:
-        if response.status != 200:
-            raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
-        print(response)
-        return await response.json()
-#  Obtener los archivos para formar un directorio
-async def obtener_archivos( courseid: int,session: aiohttp.ClientSession, url: str, params: dict):
-    params['wsfunction'] = 'core_course_get_contents'
-    params['courseid'] = courseid
-    async with session.get(url, params=params,ssl = False) as response:
-        if response.status != 200:
-            raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
-        print(response)
-        return await response.json()
+
 
 @courses_router.get("/obtener_directorio",response_description="Lista de diccionarios,cada uno contiene curso,categoria y archivos",response_model=list|bytes, )
 async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] = "xml"):
@@ -93,16 +70,16 @@ async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] =
     }
     async with aiohttp.ClientSession() as session:
         # Obtener categorías
-        categorias = await obtener_categorias(session, url, params)
+        categorias = await courses.obtener_categorias(session, url, params)
         
         # Obtener cursos
-        cursos = await obtener_cursos(session, url, params)
+        cursos = await courses.obtener_cursos(session, url, params)
         
         directorio = []
         for curso in cursos:
             # print(curso["id"])
             # Obtener archivos para cada curso
-            archivos = await obtener_archivos(curso['id'],session, url, params )
+            archivos = await courses.obtener_archivos(curso['id'],session, url, params )
             
             # Combinar datos en una estructura
             directorio.append({

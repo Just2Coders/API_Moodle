@@ -1,6 +1,6 @@
 import requests
 from fastapi import APIRouter
-from globals.variables import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT 
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT 
 competition_user_router = APIRouter(prefix="/Competition_user",tags=["Rutas que involucren relaciones de Competiciones con CURSOS "])
 def create_competency(shortname, description):
     params = {

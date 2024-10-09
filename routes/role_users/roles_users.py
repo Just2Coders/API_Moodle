@@ -1,6 +1,6 @@
 from fastapi import APIRouter,HTTPException
 from fastapi.responses import JSONResponse
-from globals.variables import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT
 import requests
 role_user_router = APIRouter(prefix="/role_user",tags=["Todas las rutas que involucren ROLES"])
 @role_user_router.post("/asignar_rol")

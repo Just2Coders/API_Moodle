@@ -3,10 +3,10 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 # from pydantic import BaseModel
 from typing import Annotated
 from fastapi.responses import JSONResponse
-from globals.variables import local_url
+from globals.Const import local_url
 # import httpx
 from models.token_model import Token
-from globals.variables import MOODLE_URL
+from globals.Const import MOODLE_URL
 from routes.course_user_relations.course_user_relations import course_user_router
 from routes.courses.courses import courses_router
 from routes.role_users.roles_users import role_user_router

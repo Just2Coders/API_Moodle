@@ -1,6 +1,6 @@
 from fastapi import APIRouter,HTTPException,Header
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.variables import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from typing import Annotated
@@ -14,6 +14,8 @@ import json
 # verificar q un topico este completado antes de entrar a otro topico
 
 user_router = APIRouter(prefix="/User",tags=["Todas las rutas relacionadas con USUARIOS solamente"])
+
+
 @user_router.post("/registrar_usuario")
 async def registrar_usuario(user: User_in):
     url = f"{MOODLE_URL}/webservice/rest/server.php?"
@@ -65,14 +67,14 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
             print(response.headers.get("Content-Type"))    
             return await validate_response(response)
         
-async def fetch_user(criteria):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:
-            print(response.content)          
-            if response.status != 200:
-                raise HTTPException(status_code=response.status, detail="Error fetching user")
-            user=  await response.json()
-            return  JSONResponse(content=user)
+# async def fetch_user(criteria):
+#     async with aiohttp.ClientSession() as session:
+#         async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:
+#             print(response.content)          
+#             if response.status != 200:
+#                 raise HTTPException(status_code=response.status, detail="Error fetching user")
+#             user=  await response.json()
+#             return  JSONResponse(content=user)
 
 @user_router.post("/verify_user/")
 async def verify_user(user_search: UserSearch):
@@ -90,12 +92,20 @@ async def verify_user(user_search: UserSearch):
         criteria['criteria[1][value]'] = user_search.email
     # s
     # Realizar la solicitud a la API de Moodle
-    users = await fetch_user(criteria)
-    users_data = json.loads(users.body)
-    print(users_data)
-    if not users_data:
+
+    # users = await fetch_user(criteria)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:
+            print(response.content)          
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error fetching user")
+            user=  await response.json()
+            
+        # users_data = json.loads(users.body)
+        # print(users_data)
+    if not user:
         raise HTTPException(status_code=404, detail="User not found")   
-    return users_data
+    return user
 @user_router.get("/user-progress/{user_id}")
 async def get_user_progress(user_id: int):
     params = {
@@ -121,6 +131,7 @@ async def get_completion_status(course_id: int, user_id: int):
 
     async with aiohttp.ClientSession() as session:
         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
+            print(response)
             completion_status = await response.json()
             return {"completion_status": completion_status}
 @user_router.get("/user-badges/{user_id}")
