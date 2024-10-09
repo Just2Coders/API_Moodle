@@ -5,8 +5,9 @@ from typing import Annotated
 from fastapi.responses import JSONResponse
 from globals.Const import local_url
 # import httpx
+from jose import jwt,JWTError
 from models.token_model import Token
-from globals.Const import MOODLE_URL
+from globals.Const import MOODLE_COURSE_URL,SECRET_KEY
 from routes.course_user_relations.course_user_relations import course_user_router
 from routes.courses.courses import courses_router
 from routes.role_users.roles_users import role_user_router
@@ -14,6 +15,7 @@ from routes.users.users import user_router
 from routes.competitions.competition import competition_user_router
 import requests
 import json
+import time
 
 app = FastAPI()
 app.description = "Mi capacitation page"
@@ -23,6 +25,34 @@ app.include_router(user_router)
 app.include_router(role_user_router)
 app.include_router(courses_router)
 app.include_router(competition_user_router)
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://cesarfrontend"],  # Solo permitir orígenes de confianza
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],  # Métodos permitidos
+    allow_headers=["*"],
+)
+@app.get("/login")
+def generar_url_segura(course_id, user_id):
+    # Genera un token con la información del curso y usuario
+    payload = {
+        "course_id": course_id,
+        "user_id": user_id,
+        "exp": time.time() + 1000  # Expiración en 5 minutos
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    print(token)
+    
+    # URL protegida con el token como parámetro
+    url_protegida = f"{MOODLE_COURSE_URL}{course_id}?token={token}"
+    return url_protegida
+
+
 # class User(BaseModel):
 #     username:str
 #     password:str

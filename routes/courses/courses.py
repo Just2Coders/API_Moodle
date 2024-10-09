@@ -1,6 +1,6 @@
 from fastapi import APIRouter,HTTPException,Header
 from fastapi.responses import JSONResponse,Response
-from globals.Const import Admin_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url,Xetid_token,MOODLE_COURSE_URL
+from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,Xetid_token
 from models.course_model import Course
 from typing import List,Annotated
 from controllers.validate_response import validate_response
@@ -132,22 +132,6 @@ async def get_course_cover(course_id: int):
 #     course_url = f"{MOODLE_COURSE_URL}?id={course_id}"
 #     return {"course_url": course_url}
 # garbage-----:
-# SECRET_KEY = "secret_key"
-# MOODLE_Course_URL_id = MOODLE_COURSE_URL+"?id="
-# @courses_router.get("/course_url")
-# def generar_url_segura(course_id, user_id):
-#     # Genera un token con la información del curso y usuario
-#     payload = {
-#         "course_id": course_id,
-#         "user_id": user_id,
-#         "exp": time.time() + 1000  # Expiración en 5 minutos
-#     }
-#     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-#     print(token)
-    
-#     # URL protegida con el token como parámetro
-#     url_protegida = f"{MOODLE_Course_URL_id}{course_id}?token={token}"
-#     return url_protegida
 
 
 
