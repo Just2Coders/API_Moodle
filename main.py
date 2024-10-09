@@ -3,21 +3,66 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 # from pydantic import BaseModel
 from typing import Annotated
 from fastapi.responses import JSONResponse
-from globals.Const import local_url
-# import httpx
 from jose import jwt,JWTError
-from models.token_model import Token
 from globals.Const import MOODLE_COURSE_URL,SECRET_KEY
 from routes.course_user_relations.course_user_relations import course_user_router
 from routes.courses.courses import courses_router
 from routes.role_users.roles_users import role_user_router
 from routes.users.users import user_router
 from routes.competitions.competition import competition_user_router
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from fastapi import FastAPI, Request, Response, Depends
+from slowapi.middleware import SlowAPIMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import json
 import time
 
+limiter = Limiter(key_func=get_remote_address,default_limits=["10 per minute"])
+
+# Instanciar la aplicación de FastAPI
 app = FastAPI()
+
+# Middleware CORS para gestionar los orígenes permitidos
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://cesarfrontend"],  # Solo permitir orígenes de confianza
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],  # Métodos permitidos
+    allow_headers=["*"],
+)
+
+# Agregar middleware de SlowAPI para manejar rate limiting global
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+
+# Manejador de excepciones para cuando se excede el límite de solicitudes
+@app.exception_handler(RateLimitExceeded)
+async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
+    return JSONResponse(
+        content={"detail": "Rate limit exceeded. Try again later."},
+        status_code=429
+    )
+# @app.middleware("http")
+# async def add_global_rate_limiting(request: Request, call_next):
+#     # Aplica el rate limiting a todas las solicitudes
+#     response = await limiter(request)
+#     if response:
+#         return response  # Si se excede el límite, devuelve la respuesta de rate limiting
+#     # Continua con la solicitud si no se ha excedido el límite
+#     return await call_next(request)
+
+
+# # Definir un manejador de excepciones para rate limiting
+# @app.exception_handler(RateLimitExceeded)
+# async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
+#     return JSONResponse(
+#         content={"detail": "Rate limit exceeded. Try again later."},
+#         status_code=429
+#     )
+
 app.description = "Mi capacitation page"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 app.include_router(course_user_router)
@@ -26,17 +71,11 @@ app.include_router(role_user_router)
 app.include_router(courses_router)
 app.include_router(competition_user_router)
 
-from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://cesarfrontend"],  # Solo permitir orígenes de confianza
-    allow_credentials=True,
-    allow_methods=["GET", "POST"],  # Métodos permitidos
-    allow_headers=["*"],
-)
+# app = FastAPI()
+
+
 @app.get("/login")
 def generar_url_segura(course_id, user_id):
     # Genera un token con la información del curso y usuario

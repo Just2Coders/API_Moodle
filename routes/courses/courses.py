@@ -126,55 +126,10 @@ async def get_course_cover(course_id: int):
             
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
     
+@courses_router.get("/probando")
+def probando_rate_limiting():
+    return "sirvio"
 
-# @courses_router.get("/course_url/{course_id}")
-# def get_course_url(course_id: int):
-#     course_url = f"{MOODLE_COURSE_URL}?id={course_id}"
-#     return {"course_url": course_url}
-# garbage-----:
-
-
-
-# @courses_router.get("/acceso-curso")
-# async def acceso_curso(token: str):
-#     try:
-#         # Verifica el token
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-#         user_id = payload.get("user_id")
-#         course_id = payload.get("course_id")
-#         print(course_id)
-#         print(user_id)
-#         # Verifica si el token ha expirado
-#         if payload["exp"] < time.time():
-#             raise HTTPException(status_code=401, detail="Token expirado")
-
-#         # Comprueba si el usuario ya está matriculado en el curso
-        
-#         enrolled_users =  await get_users_in_course( course_id = course_id,user_id = user_id,moodlewrestformat="json")
-#         # print(enrolled_users)
-#         # print(enrolled_users.body)
-#         enrolled_users_data = json.loads(enrolled_users.body.decode('utf-8'))
-#         print("enrolled users data")
-#         print(enrolled_users_data)
-#         # bool_matriculate = False    # Verifica si el user_id está en la lista de usuarios matriculados
-#         for user in enrolled_users_data:
-#             print(user["id"])
-#             print(user_id)
-#             if int(user["id"]) == int(user_id):
-#                 # bool_matriculate =True
-#                 print("cheking id")
-#                 return "el usuario ya esta matriculado"     
-#         print("matriculando")         # Matricula al usuario automáticamente
-#         await matricular_usuario(user_id, course_id)
-
-#         # Redirige al curso en Moodle
-#         url_curso = f"http://localhost:4000/course/view.php?id={course_id}"
-#         return {"redirect_url": url_curso}
-    
-#     except jwt.ExpiredSignatureError:
-#         raise HTTPException(status_code=401, detail="Token expirado")
-#     except jwt.JWTError:
-#         raise HTTPException(status_code=401, detail="Token inválido")
 @courses_router.get("/Obtener_archivos")
 async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str,Header()]="json"):
     course =  await read_courses(courseid)
@@ -240,3 +195,51 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
 #             return False
         
 # Función para verificar si el usuario está matriculado
+# @courses_router.get("/course_url/{course_id}")
+# def get_course_url(course_id: int):
+#     course_url = f"{MOODLE_COURSE_URL}?id={course_id}"
+#     return {"course_url": course_url}
+# garbage-----:
+
+
+
+# @courses_router.get("/acceso-curso")
+# async def acceso_curso(token: str):
+#     try:
+#         # Verifica el token
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+#         user_id = payload.get("user_id")
+#         course_id = payload.get("course_id")
+#         print(course_id)
+#         print(user_id)
+#         # Verifica si el token ha expirado
+#         if payload["exp"] < time.time():
+#             raise HTTPException(status_code=401, detail="Token expirado")
+
+#         # Comprueba si el usuario ya está matriculado en el curso
+        
+#         enrolled_users =  await get_users_in_course( course_id = course_id,user_id = user_id,moodlewrestformat="json")
+#         # print(enrolled_users)
+#         # print(enrolled_users.body)
+#         enrolled_users_data = json.loads(enrolled_users.body.decode('utf-8'))
+#         print("enrolled users data")
+#         print(enrolled_users_data)
+#         # bool_matriculate = False    # Verifica si el user_id está en la lista de usuarios matriculados
+#         for user in enrolled_users_data:
+#             print(user["id"])
+#             print(user_id)
+#             if int(user["id"]) == int(user_id):
+#                 # bool_matriculate =True
+#                 print("cheking id")
+#                 return "el usuario ya esta matriculado"     
+#         print("matriculando")         # Matricula al usuario automáticamente
+#         await matricular_usuario(user_id, course_id)
+
+#         # Redirige al curso en Moodle
+#         url_curso = f"http://localhost:4000/course/view.php?id={course_id}"
+#         return {"redirect_url": url_curso}
+    
+#     except jwt.ExpiredSignatureError:
+#         raise HTTPException(status_code=401, detail="Token expirado")
+#     except jwt.JWTError:
+#         raise HTTPException(status_code=401, detail="Token inválido")
