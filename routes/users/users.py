@@ -119,20 +119,7 @@ async def get_user_progress(user_id: int):
         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             grades = await response.json()
             return {"user_grades": grades}
-@user_router.get("/completion-status/{course_id}/{user_id}",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
-async def get_completion_status(course_id: int, user_id: int):
-    params = {
-        'wstoken': Xetid_token,
-        'wsfunction': 'core_completion_get_activities_completion_status',
-        'moodlewsrestformat': 'json',
-        'courseid': course_id,
-        'userid': user_id
-    }
-    async with aiohttp.ClientSession() as session:
-        async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
-            print(response)
-            completion_status = await response.json()
-            return {"completion_status": completion_status}
+
 @user_router.get("/user-badges/{user_id}",summary="Este endpoint devuelve las insignias obtenidas por un usuario.")
 async def get_user_badges(user_id: int):
     params = {

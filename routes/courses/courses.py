@@ -94,6 +94,7 @@ async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] =
     else:
         print(type(directorio))  
         return JSONResponse(content=directorio)
+    
         
 @courses_router.get("/course-cover/{course_id}")
 async def get_course_cover(course_id: int):
@@ -133,11 +134,12 @@ def probando_rate_limiting():
 @courses_router.get("/Obtener_archivos")
 async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str,Header()]="json"):
     course =  await read_courses(courseid)
+    print(course)
     course = json.loads(course.body.decode("utf-8"))
     criteria ={}
    
-    criteria['criteria[0][key]'] = 'id'
-    criteria['criteria[0][value]'] =course[0]["categoryid"]
+    # criteria['criteria[0][key]'] = 'id'
+    # criteria['criteria[0][value]'] =course[0]["categoryid"]
 
     params ={
         'wstoken': Xetid_token,
@@ -151,6 +153,39 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
     # params['courseid'] = courseid
     async with aiohttp.ClientSession() as session:
         category = await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
+        category_tarjet = [cat for cat in category if  cat["id"] ==course[0]["categoryid"]] 
+        print(category_tarjet)   
+        parents:str = category_tarjet[0]["path"]
+        parents_array = parents.split("/")
+        
+        
+        for parent in parents_array:
+            print(parent)           
+            if parent == "":
+                continue     
+            parents = ([cat for cat in category if int(parent) == cat["id"]])   
+        print(parents) 
+            # criteria['criteria[0][value]'] = int(parent)
+        #     print(criteria['criteria[0][value]'])
+        # criteria.update({
+        # 'criteria[0][value]' :10})
+        # print(criteria)
+        # parent_category = await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
+        # print(parent_category)
+        # parents:str = category[0]["path"]
+        # parents_array = parents.split("/")
+        # categories = []
+        # for parent in parents_array:
+        #     if parent == "":
+        #         continue                    
+        #     criteria['criteria[0][value]'] = int(parent)
+        #     print(criteria['criteria[0][value]'])
+        #     category_new =await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
+        #     for cat in category_new:
+        #         print(cat["id"])
+            
+
+        # print(parents_array)
         async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
@@ -158,7 +193,7 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
             archivos = await response.json()
         directorio.append({
                 'curso': course,
-                'categoria': category,
+                'categoria': parents,
                 'archivos': archivos
             })
         if moodlewsrestformat == "xml":                 
@@ -168,7 +203,9 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
         else:
             print(type(directorio))  
             return JSONResponse(content=directorio)
-            
+        
+
+
 # async def get_users_in_course(course_id:int,user_id:int,moodlewrestformat:Annotated[str,Header()]="xml"):
 #     url = MOODLE_URL + MOODLE_WS_ENDPOINT
 #     function = "core_enrol_get_enrolled_users"

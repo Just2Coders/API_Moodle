@@ -3,9 +3,9 @@ from fastapi.responses import JSONResponse,Response,HTMLResponse
 from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url
 from typing import Annotated
 from controllers.validate_response import  validate_response
-from routes.users.users import get_completion_status
 import aiohttp
 import requests
+import json
 # import os
 # import httpx
 # desglozar los parents de las categorias
@@ -97,23 +97,40 @@ async def get_workshops(course_id: int,moodlewsrestformat:Annotated[str,Header()
 #         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
 #             return response.json()
 @course_user_router.get("/user/{user_id}/completed_courses",summary="Obtiene los cursos completados por un usuario, junto con las actividades completadas.,no sirve arreglar q el get course completion status sea todos los cursos dado un userid")
-async def get_completed_courses(user_id: int,courseid):
+async def get_completed_courses(user_id: int):
     #courses_enrolled =  await 
-    course_completion_status = await get_course_completion_status(user_id,courseid)
+    user_courses = await get_courses_by_user(userid=user_id)
+    user_courses_serialized = json.loads(user_courses.body.decode("utf-8"))
     completed_courses = []
-    print(completed_courses)
-    for course in course_completion_status['statuses']:
-        if course['completionstatus']['completed']:
-            print(course)
-            print(course['course']['id'])
-            activities_completion_status = await get_completion_status(courseid=course['course']['id'], user_id=user_id)
-            completed_activities = [activity for activity in activities_completion_status['statuses'] if activity['state'] == 1]
-            completed_courses.append({
-                'course_id': course['course']['id'],
-                'course_name': course['course']['fullname'],
-                'completed_activities': completed_activities
-            })
-    return JSONResponse(content=completed_courses)
+    response =[]
+    print("cursos")
+    print(user_courses_serialized)
+    for course in user_courses_serialized:
+        print(course["id"])
+        course_completion_status = await get_course_completion_status(user_id,course["id"])
+        course_completion_status_serealized = json.loads(course_completion_status.body.decode("utf-8"))    
+        print("course_completion_status_serealized")   
+        print(course_completion_status_serealized)
+       
+        if course_completion_status.status_code == 200 and course_completion_status_serealized["exception"] == "moodle_exception" :
+            continue
+        else:
+            if course_completion_status_serealized['completionstatus']['completed']:
+                completed_courses.append(
+                    {"fullname":course["fullname"],
+                     "id":course["id"]})
+            
+    for course in completed_courses:
+        activities_completion_status = await get_completion_status(courseid=course['id'], user_id=user_id)
+        activities_completion_status_serialized = json.loads(activities_completion_status.decode("utf-8"))
+        completed_activities = [activity for activity in activities_completion_status_serialized if activity['state'] == 1]
+        response.append({
+            'course_id': course['id'],
+            'course_name': course['fullname'],
+            'completed_activities': completed_activities
+        })
+           
+    return JSONResponse(content=response)
 
 @course_user_router.get("/course_completetion_status",summary='Obtiene el estado de finalización de un curso específico para un usuario.,Tener en cuenta que hayh q configurar los criterios para laterminacion del curso')
 async def get_course_completion_status(user_id:int,courseid:int,moodlewsrestformat:Annotated[str,Header()]="json"):
@@ -141,6 +158,20 @@ async def get_courses_by_user(userid:int,moodlewsrestformat:Annotated[str,Header
     async with aiohttp.ClientSession() as session:
         async with session.get(url=MOODLE_URL+MOODLE_WS_ENDPOINT,params=params,ssl=False) as response :
             return await validate_response(response)
+@course_user_router.get("/completion-status/{course_id}/{user_id}",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
+async def get_completion_status(course_id: int, user_id: int,moodlewsrestformat:Annotated[str,Header()]="json"):
+    params = {
+        'wstoken': Xetid_token,
+        'wsfunction': 'core_completion_get_activities_completion_status',
+        'moodlewsrestformat': moodlewsrestformat,
+        'courseid': course_id,
+        'userid': user_id
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
+            print(response)
+            completion_status = await response.json()
+            return validate_response(completion_status)
 # @course_user_router.get("/user/{user_id}/completed_courses")
 # async def get_completed_courses(user_id: int):
 #     course_completion_status = await get_course_completion_status(user_id)
