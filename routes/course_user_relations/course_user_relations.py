@@ -8,7 +8,7 @@ import requests
 import json
 # import os
 # import httpx
-# desglozar los parents de las categorias
+
 # corroutine error en get completetion
 
 course_user_router = APIRouter(prefix="/Course_user",tags=["Rutas que involucren relaciones de USUARIOS con CURSOS "])
@@ -170,8 +170,8 @@ async def get_completion_status(course_id: int, user_id: int,moodlewsrestformat:
     async with aiohttp.ClientSession() as session:
         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             print(response)
-            completion_status = await response.json()
-            return validate_response(completion_status)
+            # completion_status = await response.json()
+            return await validate_response(response)
 # @course_user_router.get("/user/{user_id}/completed_courses")
 # async def get_completed_courses(user_id: int):
 #     course_completion_status = await get_course_completion_status(user_id)
