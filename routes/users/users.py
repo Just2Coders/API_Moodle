@@ -1,6 +1,7 @@
 from fastapi import APIRouter,HTTPException,Header
 from fastapi.responses import JSONResponse,Response,RedirectResponse
 from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
+from globals.passwords import password
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from typing import Annotated
@@ -29,15 +30,15 @@ async def registrar_usuario(user: User_in):
     'wsfunction': 'core_user_create_users',
     'moodlewsrestformat': 'json',
     'users[0][username]': user.username,
-    'users[0][password]': "String124*",
+    'users[0][password]': f"{password}{user.username}",
     'users[0][firstname]': firstname(),
-    'users[0][lastname]': "userlastname",
-    'users[0][email]': user.email,
-    'users[0][auth]': "webservices"
+    'users[0][lastname]': user.username[len(firstname()): ],
+    'users[0][email]': user.email
     # "users[0][roleid]": user.roleid,
     # "users[0][contextid]":user.contextid
     }
 
+   
 # Realizar la solicitud POST
     async with aiohttp.ClientSession() as session:
         async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:
