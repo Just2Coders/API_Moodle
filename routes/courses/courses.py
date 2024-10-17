@@ -127,9 +127,6 @@ async def get_course_cover(course_id: int):
             
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
     
-@courses_router.get("/probando")
-def probando_rate_limiting():
-    return "sirvio"
 
 @courses_router.get("/Obtener_archivos")
 async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str,Header()]="json"):
@@ -153,18 +150,43 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
     # params['courseid'] = courseid
     async with aiohttp.ClientSession() as session:
         category = await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
-        category_tarjet = [cat for cat in category if  cat["id"] ==course[0]["categoryid"]] 
+        category_tarjet = [cat for cat in category if  cat["id"] == course[0]["categoryid"]] 
         print(category_tarjet)   
         parents:str = category_tarjet[0]["path"]
         parents_array = parents.split("/")
-        
+        categories =[]
         
         for parent in parents_array:
             print(parent)           
             if parent == "":
-                continue     
-            parents = ([cat for cat in category if int(parent) == cat["id"]])   
-        print(parents) 
+                continue   
+            for  cat in category:
+                if cat["id"] == int(parent):
+                    categories.append(cat)
+                    break
+                    
+                
+            # categories = [cat for cat in category if cat["id"] == int(parent)]
+            # print(categories) 
+
+        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
+            print(response)
+            archivos = await response.json()
+        directorio.append({
+                'curso': course,
+                'categoria': categories,
+                'archivos': archivos
+            })
+        if moodlewsrestformat == "xml":                 
+            xml_data = dicttoxml.dicttoxml(directorio)    
+            print(type(xml_data))   
+            return Response(content=xml_data, media_type="application/xml")
+        else:
+            print(type(directorio))  
+            return JSONResponse(content=directorio)
+        
             # criteria['criteria[0][value]'] = int(parent)
         #     print(criteria['criteria[0][value]'])
         # criteria.update({
@@ -186,25 +208,6 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
             
 
         # print(parents_array)
-        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
-            if response.status != 200:
-                raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
-            print(response)
-            archivos = await response.json()
-        directorio.append({
-                'curso': course,
-                'categoria': parents,
-                'archivos': archivos
-            })
-        if moodlewsrestformat == "xml":                 
-            xml_data = dicttoxml.dicttoxml(directorio)    
-            print(type(xml_data))   
-            return Response(content=xml_data, media_type="application/xml")
-        else:
-            print(type(directorio))  
-            return JSONResponse(content=directorio)
-        
-
 
 # async def get_users_in_course(course_id:int,user_id:int,moodlewrestformat:Annotated[str,Header()]="xml"):
 #     url = MOODLE_URL + MOODLE_WS_ENDPOINT
