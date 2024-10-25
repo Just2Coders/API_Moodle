@@ -50,7 +50,7 @@ async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
 
 
 app.description = "Moodle_Ticket_API"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 app.include_router(course_user_router)
 app.include_router(user_router)
 app.include_router(role_user_router)
@@ -86,61 +86,61 @@ async def obtener_ip_cliente(request: Request):
 
 
 
-MOODLE_URL = "https://preparatoria.xutil.cu"  # Cambia esto por tu URL de Moodle
-LOGIN_URL = f"{MOODLE_URL}/login/index.php"
+# MOODLE_URL = "https://preparatoria.xutil.cu"  # Cambia esto por tu URL de Moodle
+# LOGIN_URL = f"{MOODLE_URL}/login/index.php"
 
-# Datos de usuario para login (ajusta con los datos correctos)
-MOODLE_USERNAME = "probandocampos"
-MOODLE_PASSWORD = "aS61idm2914ZcmAosd9ejh138*probandocampos"
+# # Datos de usuario para login (ajusta con los datos correctos)
+# MOODLE_USERNAME = "probandocampos"
+# MOODLE_PASSWORD = "aS61idm2914ZcmAosd9ejh138*probandocampos"
 
-@app.post("/login")
-async def moodle_login():
-    async with aiohttp.ClientSession() as session:
-        # Primero, hacemos una solicitud GET a la página de login para obtener la cookie de sesión inicial
-        async with session.get(LOGIN_URL) as response:
-            if response.status != 200:
-                raise HTTPException(status_code=response.status, detail="Error al obtener la página de login")
+# @app.post("/login")
+# async def moodle_login():
+#     async with aiohttp.ClientSession() as session:
+#         # Primero, hacemos una solicitud GET a la página de login para obtener la cookie de sesión inicial
+#         async with session.get(LOGIN_URL) as response:
+#             if response.status != 200:
+#                 raise HTTPException(status_code=response.status, detail="Error al obtener la página de login")
             
-            # Extraer cookies de la sesión
-            cookies = response.cookies
+#             # Extraer cookies de la sesión
+#             cookies = response.cookies
 
-        # Ahora, enviamos las credenciales al formulario de login
-        login_data = {
-            "username": MOODLE_USERNAME,
-            "password": MOODLE_PASSWORD
-        }
+#         # Ahora, enviamos las credenciales al formulario de login
+#         login_data = {
+#             "username": MOODLE_USERNAME,
+#             "password": MOODLE_PASSWORD
+#         }
 
-        async with session.post(LOGIN_URL, params=login_data, cookies=cookies,ssl =False) as login_response:
-            if login_response.status != 200:
-                raise HTTPException(status_code=login_response.status, detail="Error al intentar autenticar")
-            print(cookies)
-            print(await login_response.content.read())
-            print(login_response.url)
-            # Verificamos si el login fue exitoso
-            # if 'login/index.php' in str(login_response.url):
-            #     return {"detail": "Error de autenticación. Verifica las credenciales."}
+#         async with session.post(LOGIN_URL, params=login_data, cookies=cookies,ssl =False) as login_response:
+#             if login_response.status != 200:
+#                 raise HTTPException(status_code=login_response.status, detail="Error al intentar autenticar")
+#             print(cookies)
+#             print(await login_response.content.read())
+#             print(login_response.url)
+#             # Verificamos si el login fue exitoso
+#             # if 'login/index.php' in str(login_response.url):
+#             #     return {"detail": "Error de autenticación. Verifica las credenciales."}
             
-            # Si login fue exitoso, ahora tenemos acceso a la sesión
-            return {"detail": "Login exitoso", "cookies": session.cookie_jar.filter_cookies(MOODLE_URL)}
+#             # Si login fue exitoso, ahora tenemos acceso a la sesión
+#             return {"detail": "Login exitoso", "cookies": session.cookie_jar.filter_cookies(MOODLE_URL)}
 
-# Ejemplo de acceso a una página autenticada
-@app.get("/authenticated_page")
-async def access_authenticated_page():
-    async with aiohttp.ClientSession() as session:
-        # Primero nos autenticamos
-        login_response = await moodle_login()
+# # Ejemplo de acceso a una página autenticada
+# @app.get("/authenticated_page")
+# async def access_authenticated_page():
+#     async with aiohttp.ClientSession() as session:
+#         # Primero nos autenticamos
+#         login_response = await moodle_login()
 
-        if "Error" in login_response["detail"]:
-            raise HTTPException(status_code=401, detail="Error de autenticación")
+#         if "Error" in login_response["detail"]:
+#             raise HTTPException(status_code=401, detail="Error de autenticación")
 
-        # Usamos las cookies de la sesión iniciada para acceder a una página autenticada
-        async with session.get(f"{MOODLE_URL}/my/", cookies=login_response["cookies"]) as auth_response:
-            if auth_response.status != 200:
-                raise HTTPException(status_code=auth_response.status, detail="Error al acceder a la página autenticada")
+#         # Usamos las cookies de la sesión iniciada para acceder a una página autenticada
+#         async with session.get(f"{MOODLE_URL}/my/", cookies=login_response["cookies"]) as auth_response:
+#             if auth_response.status != 200:
+#                 raise HTTPException(status_code=auth_response.status, detail="Error al acceder a la página autenticada")
             
-            # Retornamos el contenido de la página autenticada
-            page_content = await auth_response.text()
-            return {"page_content": page_content}
+#             # Retornamos el contenido de la página autenticada
+#             page_content = await auth_response.text()
+#             return {"page_content": page_content}
 
 # @app.post("/logueando")
 # async def login(username,password):

@@ -6,6 +6,7 @@ from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from typing import Annotated
 from controllers.validate_response import validate_response
+from controllers.connection import error_handler
 import aiohttp
 # import requests
 # import httpx
@@ -18,10 +19,12 @@ user_router = APIRouter(prefix="/User",tags=["Todas las rutas relacionadas con U
 
 
 @user_router.post("/registrar_usuario")
+@error_handler
 async def registrar_usuario(user: User_in):
     url = f"{MOODLE_URL}/webservice/rest/server.php?"
     # 53 hasta 71 noooo
     firstname = lambda : user.username[:round(len(user.username) / 2)]
+    lastname = user.username[len(firstname()): ]
     print(firstname)
 
 # Definir los parámetros de la solicitud
@@ -32,22 +35,23 @@ async def registrar_usuario(user: User_in):
     'users[0][username]': user.username,
     'users[0][password]': f"{password}{user.username}",
     'users[0][firstname]': firstname(),
-    'users[0][lastname]': user.username[len(firstname()): ],
+    'users[0][lastname]': lastname,
     'users[0][email]': user.email
     # "users[0][roleid]": user.roleid,
     # "users[0][contextid]":user.contextid
     }
-
-   
-# Realizar la solicitud POST
+    
     async with aiohttp.ClientSession() as session:
-        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:
-    # response = requests.post(url, params=params)
+        async with session.post(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:
+            print(response.status)
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al crear el usuario en Moodle")
             data = await response.json()
             print(data)
-            return(data)
+            # usersearch = UserSearch(**data[0])
+            # print(usersearch)
+            # return await verify_user(usersearch)
+  
 @user_router.get("/site_info")
 async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     params={
@@ -78,12 +82,13 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
 #             return  JSONResponse(content=user)
 
 @user_router.post("/verify_user/")
+@error_handler
 async def verify_user(user_search: UserSearch):
     # Preparar los parámetros de búsqueda
     criteria = {
         'wstoken': Xetid_token,
         'wsfunction': 'core_user_get_users',
-        'moodlewsrestformat': 'json',
+        'moodlewsrestformat': "json",
     }
     if user_search.username:
         criteria['criteria[0][key]'] = 'username'
@@ -96,17 +101,22 @@ async def verify_user(user_search: UserSearch):
 
     # users = await fetch_user(criteria)
     async with aiohttp.ClientSession() as session:
-        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:
-            print(response.content)          
-            if response.status != 200:
-                raise HTTPException(status_code=response.status, detail="Error fetching user")
-            user=  await response.json()
+        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:         
+            response_data = await response.json()
+            # response_serialized = json.loads(response_validated.body.decode("utf-8"))
+            if response_data["users"] == []:
+                raise HTTPException(status_code=404,detail="Resource not found")
+            else:
+                return await response_data
             
-        # users_data = json.loads(users.body)
-        # print(users_data)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")   
-    return user
+                
+            
+            
+
+            
+    # if not user:
+    #     raise HTTPException(status_code=404, detail="User not found")   
+    # return user
 @user_router.get("/user-progress/{user_id}",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
 async def get_user_progress(user_id: int):
     params = {

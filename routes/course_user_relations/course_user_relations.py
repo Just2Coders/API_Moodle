@@ -51,8 +51,6 @@ async def get_users_in_course(course_id:int,moodlewrestformat:Annotated[str,Head
         async with session.get(url, params=params, ssl=False) as response:   
             print(response.status)
             print(response.headers.get("Content-Type"))
-            if response.status!= 200:
-                raise HTTPException(status_code=response.status, detail="Error al intentar obtener informacion del sitio")
             return await validate_response(response)
 @course_user_router.get("/mod_workshop_get_grades",summary="Obtiene las calificaciones de un taller (workshop).,Se necesita primero Ver los workshops para sacar el id")
 async def get_grades(workshop_id: int,moodlewsrestformat:Annotated[str,Header()]="json")->Response:

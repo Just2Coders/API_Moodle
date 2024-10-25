@@ -10,7 +10,6 @@ from routes.course_user_relations.course_user_relations import get_users_in_cour
 import requests
 import aiohttp
 import dicttoxml
-# import asyncio
 import json
 import time
 courses_router = APIRouter(prefix="/Courses",tags=["Todas las rutas que involucren CURSOS de Moodle"])
@@ -186,53 +185,6 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
         else:
             print(type(directorio))  
             return JSONResponse(content=directorio)
-        
-            # criteria['criteria[0][value]'] = int(parent)
-        #     print(criteria['criteria[0][value]'])
-        # criteria.update({
-        # 'criteria[0][value]' :10})
-        # print(criteria)
-        # parent_category = await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
-        # print(parent_category)
-        # parents:str = category[0]["path"]
-        # parents_array = parents.split("/")
-        # categories = []
-        # for parent in parents_array:
-        #     if parent == "":
-        #         continue                    
-        #     criteria['criteria[0][value]'] = int(parent)
-        #     print(criteria['criteria[0][value]'])
-        #     category_new =await courses.obtener_categorias(session,MOODLE_URL +MOODLE_WS_ENDPOINT,params=criteria)
-        #     for cat in category_new:
-        #         print(cat["id"])
-            
-
-        # print(parents_array)
-
-# async def get_users_in_course(course_id:int,user_id:int,moodlewrestformat:Annotated[str,Header()]="xml"):
-#     url = MOODLE_URL + MOODLE_WS_ENDPOINT
-#     function = "core_enrol_get_enrolled_users"
-
-#     params = {
-#         "wstoken": Xetid_token,
-#         "wsfunction": function,
-#         "moodlewsrestformat": moodlewrestformat,
-#         "courseid": course_id  # Reemplaza course_id con el ID del curso
-#     }
-
-#     async with aiohttp.ClientSession() as session:       
-#         async with session.get(url, params=params, ssl=False) as response:   
-#             print(response.status)
-#             print(response.headers.get("Content-Type"))
-#             if response.status!= 200:
-#                 raise HTTPException(status_code=response.status, detail="Error al intentar obtener informacion del sitio")
-#             enrolled_users =  await validate_response(response)
-#             for user in enrolled_users:
-#                 if user["id"] == user_id:
-#                     print(True)
-#                     return True
-#             print(False)
-#             return False
         
 # Función para verificar si el usuario está matriculado
 # @courses_router.get("/course_url/{course_id}")
