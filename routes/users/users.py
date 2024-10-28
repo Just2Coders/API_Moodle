@@ -5,8 +5,8 @@ from globals.passwords import password
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from typing import Annotated
-from controllers.validate_response import validate_response
-from controllers.connection import error_handler
+from middlewares.validate_response import validate_response
+from middlewares.connection import error_handler
 import aiohttp
 # import requests
 # import httpx

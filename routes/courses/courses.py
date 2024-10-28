@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse,Response
 from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,Xetid_token
 from models.course_model import Course
 from typing import List,Annotated
-from controllers.validate_response import validate_response
+from middlewares.validate_response import validate_response
 from jose import jwt,JWTError
 from functions import courses
 from routes.course_user_relations.course_user_relations import get_users_in_course
@@ -126,7 +126,6 @@ async def get_course_cover(course_id: int):
             
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
     
-
 @courses_router.get("/Obtener_archivos")
 async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str,Header()]="json"):
     course =  await read_courses(courseid)
