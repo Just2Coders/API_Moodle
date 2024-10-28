@@ -1,12 +1,14 @@
-from fastapi import APIRouter,HTTPException,Header
+from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.responses import JSONResponse,Response,RedirectResponse
 from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
 from globals.passwords import password
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from typing import Annotated
+from functions.user import verify_user
 from middlewares.validate_response import validate_response
 from middlewares.connection import error_handler
+from middlewares.find_userid import find_userid
 import aiohttp
 # import requests
 # import httpx
@@ -81,34 +83,11 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
 #             user=  await response.json()
 #             return  JSONResponse(content=user)
 
-@user_router.post("/verify_user/")
+@user_router.post("/verify_user")
 @error_handler
-async def verify_user(user_search: UserSearch):
+async def verify_user_router(user_search: UserSearch):
     # Preparar los parámetros de búsqueda
-    criteria = {
-        'wstoken': Xetid_token,
-        'wsfunction': 'core_user_get_users',
-        'moodlewsrestformat': "json",
-    }
-    if user_search.username:
-        criteria['criteria[0][key]'] = 'username'
-        criteria['criteria[0][value]'] = user_search.username
-    if user_search.email:
-        criteria['criteria[1][key]'] = 'email'
-        criteria['criteria[1][value]'] = user_search.email
-    # s
-    # Realizar la solicitud a la API de Moodle
-
-    # users = await fetch_user(criteria)
-    async with aiohttp.ClientSession() as session:
-        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:         
-            response_data = await response.json()
-            # response_serialized = json.loads(response_validated.body.decode("utf-8"))
-            if response_data["users"] == []:
-                raise HTTPException(status_code=404,detail="Resource not found")
-            else:
-                return await response_data
-            
+    return  await verify_user(user_search)
                 
             
             
@@ -117,8 +96,8 @@ async def verify_user(user_search: UserSearch):
     # if not user:
     #     raise HTTPException(status_code=404, detail="User not found")   
     # return user
-@user_router.get("/user-progress/{user_id}",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
-async def get_user_progress(user_id: int):
+@user_router.get("/user-progress",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
+async def get_user_progress(user_id: Annotated[str,Depends(find_userid)]):
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'gradereport_overview_get_course_grades',
@@ -131,8 +110,8 @@ async def get_user_progress(user_id: int):
             grades = await response.json()
             return {"user_grades": grades}
 
-@user_router.get("/user-badges/{user_id}",summary="Este endpoint devuelve las insignias obtenidas por un usuario.")
-async def get_user_badges(user_id: int):
+@user_router.get("/user-badges",summary="Este endpoint devuelve las insignias obtenidas por un usuario.")
+async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'core_badges_get_user_badges',

@@ -1,9 +1,10 @@
-from fastapi import APIRouter,HTTPException,Header
+from fastapi import APIRouter,HTTPException,Header,Depends
 from fastapi.responses import JSONResponse,Response,HTMLResponse
 from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url
 from typing import Annotated
 from middlewares.connection import error_handler
 from middlewares.validate_response import  validate_response
+from middlewares.find_userid import find_userid
 import aiohttp
 import requests
 import json
@@ -13,10 +14,12 @@ import json
 # corroutine error en get completetion
 
 course_user_router = APIRouter(prefix="/Course_user",tags=["Rutas que involucren relaciones de USUARIOS con CURSOS "])
+course_user_router.middleware_stack
 
 @course_user_router.post("/matricular")
 @error_handler
-async def enrol_user_in_course(user_id:str, course_id:int, role_id:int = 5):
+async def enrol_user_in_course(user_id:Annotated[str,Depends(find_userid)], course_id:int, role_id:int = 5):
+    print(user_id)
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'enrol_manual_enrol_users',
@@ -30,7 +33,7 @@ async def enrol_user_in_course(user_id:str, course_id:int, role_id:int = 5):
         response = await session.post(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl=False)
         if response.status != 200:
             raise HTTPException(status_code=response.status, detail="Error al inscribir al usuario en el curso")
-        return await response
+        return  await response.json()
         # resp =await response.json()
         # print(resp)        
         # return JSONResponse(content=response)
@@ -105,7 +108,7 @@ async def get_workshops(course_id: int,moodlewsrestformat:Annotated[str,Header()
 #             return response.json()
 @course_user_router.get("/user/{user_id}/completed_courses",summary="Obtiene los cursos completados por un usuario, junto con las actividades completadas.")
 @error_handler
-async def get_completed_courses(user_id: int):
+async def get_completed_courses(user_id: Annotated[str,Depends(find_userid)]):
     #courses_enrolled =  await 
     user_courses = await get_courses_by_user(userid=user_id)
     user_courses_serialized = json.loads(user_courses.body.decode("utf-8"))
@@ -129,7 +132,7 @@ async def get_completed_courses(user_id: int):
                      "id":course["id"]})
             
     for course in completed_courses:
-        activities_completion_status = await get_completion_status(courseid=course['id'], user_id=user_id)
+        activities_completion_status = await get_activities_completion_status(courseid=course['id'], user_id=user_id)
         activities_completion_status_serialized = json.loads(activities_completion_status.decode("utf-8"))
         completed_activities = [activity for activity in activities_completion_status_serialized if activity['state'] == 1]
         response.append({
@@ -140,7 +143,7 @@ async def get_completed_courses(user_id: int):
            
     return JSONResponse(content=response)
 
-@course_user_router.get("/course_completetion_status",summary='Obtiene el estado de finalización de un curso específico para un usuario.,Tener en cuenta que hayh q configurar los criterios para laterminacion del curso')
+@course_user_router.get("/course_completetion_status",summary='Obtiene el estado de finalización de un curso específico para un usuario.,Tener en cuenta que hay q configurar los criterios para la terminacion del curso')
 @error_handler
 async def get_course_completion_status(user_id:int,courseid:int,moodlewsrestformat:Annotated[str,Header()]="json"):
     
@@ -159,7 +162,7 @@ async def get_course_completion_status(user_id:int,courseid:int,moodlewsrestform
        
 @course_user_router.get("/courses_by_user/{userid}",summary="Obtiene la lista de cursos a los que un usuario está matriculado")
 @error_handler
-async def get_courses_by_user(userid:int,moodlewsrestformat:Annotated[str,Header()]="json"):
+async def get_courses_by_user(userid:Annotated[str,Depends(find_userid)],moodlewsrestformat:Annotated[str,Header()]="json"):
     params ={
         "wstoken":Xetid_token,
         "wsfunction":"core_enrol_get_users_courses",
@@ -170,9 +173,9 @@ async def get_courses_by_user(userid:int,moodlewsrestformat:Annotated[str,Header
         async with session.get(url=MOODLE_URL+MOODLE_WS_ENDPOINT,params=params,ssl=False) as response :
             return await validate_response(response)
         
-@course_user_router.get("/completion-status/{course_id}/{user_id}",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
+@course_user_router.get("/completion_status/{course_id}/{user_id}",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
 @error_handler
-async def get_completion_status(course_id: int, user_id: int,moodlewsrestformat:Annotated[str,Header()]="json"):
+async def get_activities_completion_status(course_id: int, user_id: Annotated[str,Depends(find_userid)],moodlewsrestformat:Annotated[str,Header()]="json"):
     params = {
         'wstoken': Xetid_token,
         'wsfunction': 'core_completion_get_activities_completion_status',
