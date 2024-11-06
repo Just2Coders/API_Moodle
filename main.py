@@ -1,21 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException, status,Request
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 # from pydantic import BaseModel
+from bs4 import BeautifulSoup
 from typing import Annotated
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse,RedirectResponse,HTMLResponse
 from jose import jwt,JWTError
-from globals.Const import MOODLE_COURSE_URL,SECRET_KEY
+from globals.Const import MOODLE_URL,MOODLE_COURSE_URL,SECRET_KEY,Xetid_token
 from routes.course_user_relations.course_user_relations import course_user_router
 from routes.courses.courses import courses_router
 from routes.role_users.roles_users import role_user_router
 from routes.users.users import user_router
 from routes.competitions.competition import competition_user_router
+from models.token_model import Token
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from fastapi import FastAPI, Request, Response, Depends
 from slowapi.middleware import SlowAPIMiddleware
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter, Depends, HTTPException
 from http.cookies import SimpleCookie
 import requests
 import json
@@ -30,7 +33,7 @@ app = FastAPI()
 # Middleware CORS para gestionar los orígenes permitidos
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://cesarfrontend"],  # Solo permitir orígenes de confianza
+    allow_origins=["*"],  # Solo permitir orígenes de confianza
     allow_credentials=True,
     allow_methods=["*"],  # Métodos permitidos
     allow_headers=["*"],
@@ -50,7 +53,6 @@ async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
 
 
 app.description = "Moodle_Ticket_API"
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 app.include_router(course_user_router)
 app.include_router(user_router)
 app.include_router(role_user_router)
@@ -59,9 +61,151 @@ app.include_router(competition_user_router)
 
 
 
+
+
+MOODLE_LOGIN_URL = "https://preparatoria.xutil.cu/login/index.php"
+MOODLE_COURSE_URL = "https://preparatoria.xutil.cu/course/view.php?id=7"
+
+# @app.post("/login_and_redirect")
+# async def login_and_redirect(username:str,password:str):
+#     # Verificar las credenciales del usuario en tu sistema
+
+#     async with aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar()) as session:
+#         # Realiza el login en Moodle
+#         login_payload = {
+#             'username': username,
+#             'password': password
+#         }
+
+#         # Enviar la solicitud de inicio de sesión a Moodle
+#         async with session.post(MOODLE_LOGIN_URL, params=login_payload,ssl=False) as response:
+#             if response.status != 200:
+#                 raise HTTPException(status_code=401, detail="Error al iniciar sesión en Moodle")
+#             text = await response.text()
+#             print(text)
+#             cookies_response_1= response.cookies.values()
+#             print(cookies_response_1)
+#             cookies_response = response.cookies
+#             # set_cookie_headers = []
+#             redirectresponse = RedirectResponse(url=MOODLE_COURSE_URL)
+#             for cookie in cookies_response.values():
+#                 redirectresponse.set_cookie(key=cookie.key,value=cookie.value,domain=cookie['domain'],path=cookie['path'],secure=cookie['secure'])
+#                 print(cookie.key)
+#                 print(cookie.value)
+#                 print(cookie['domain'])
+#                 print(cookie['path'])
+#                 print(cookie['secure'])
+                
+#             return redirectresponse
+            # Procesa las cookies detalladas desde la respuesta
+            # for cookie in cookies_response.values():
+            #     cookie_string = f"{cookie.key}={cookie.value}"
+            #     if cookie.get('domain'):
+            #         cookie_string += f"; Domain={cookie['domain']}"
+            #     if cookie.get('path'):
+            #         cookie_string += f"; Path={cookie['path']}"
+            #     if cookie.get('secure'):
+            #         cookie_string += "; Secure"
+            #     if cookie.get('httponly'):
+            #         cookie_string += "; HttpOnly"
+            #     if cookie.get('expires'):
+            #         cookie_string += f"; Expires={cookie['expires']}"
+                
+            #     # Agrega la cookie al encabezado 'Set-Cookie'
+            #     set_cookie_headers.append(("Set-Cookie", cookie_string))
+
+            # Redirige al curso en Moodle con las cookies establecidas
+            
+    #         print("cookiesssssssssssss")
+    #         print(cookies.values())
+    #         values = cookies.values()  
+    #         for cookie in cookies.values():
+    # #             # Crear un encabezado 'Set-Cookie' para cada cookie de la sesión
+    #             cookiesjson = {f'{cookie.key}':cookie.value} 
+    #         print(cookiesjson)               
+    #             # Crear un encabezado 'Set-Cookie' para cada cookie de la sesió         
+    #         return RedirectResponse(url=MOODLE_COURSE_URL, headers={"Set-Cookie": cookiesjson})
+            # return HTMLResponse(text)
+    #         print(text)  # Obtener todas las cookies devueltas por Moodle
+    #         cookies = session.cookie_jar.filter_cookies(MOODLE_LOGIN_URL)
+
+    #         # Preparar las cookies para enviar al cliente
+    #         set_cookie_headers = []
+    #         for cookie in cookies.values():
+    #             # Crear un encabezado 'Set-Cookie' para cada cookie de la sesión
+    #             set_cookie_headers.append(f"{cookie.key}={cookie.value}; Path={cookie['path']}; HttpOnly; Secure;")
+
+    # # Redirigir al usuario a la URL del curso de Moodle, incluyendo las cookies
+    # return RedirectResponse(url=MOODLE_COURSE_URL, headers={"Set-Cookie": set_cookie_headers})
+    
 # app = FastAPI()
 
+@app.post("/login_key")
+async def login_key(email:str):
+    params = {
+        'wstoken': Xetid_token,
+        'wsfunction': 'auth_userkey_request_login_url',
+        'moodlewsrestformat': 'json',
+        'user[email]': email
+    }
+    posteo = requests.post("https://preparatoria.xutil.cu/webservice/rest/server.php",params=params,verify=False)
+    return  posteo.content
+@app.post("/course")
+async def course():
+    course = requests.post(url="https://preparatoria.xutil.cu/auth/userkey/login.php?key=93fd62bfbe9daf0d90c0d2e13e1bbd30&wantsurl=https://preparatoria.xutil.cu/course/view.php?id=7",verify=False)
+    print(course)
+    return HTMLResponse(content=course.content)
+@app.get("/redirect")
+async def redirect():
+    return RedirectResponse(url="https://fastapi.tiangolo.com")
+# @app.post("/login")
+# async def login():
+#     login_url = 'https://preparatoria.xutil.cu/login/index.php'
 
+#     # Paso 1: Hacer una solicitud GET para obtener el token
+#     response = requests.get(login_url, verify=False)
+    
+#     if response.status_code != 200:
+#         raise HTTPException(status_code=response.status_code, detail="Error al conectar con Moodle")
+
+#     # Paso 2: Analizar el HTML y extraer el token
+#     soup = BeautifulSoup(response.content, 'html.parser')
+#     token_input = soup.find('input', {'name': 'logintoken'})
+    
+#     if not token_input:
+#         raise HTTPException(status_code=500, detail="No se pudo encontrar el token de inicio de sesión")
+
+#     logintoken = token_input['value']
+
+#     # Paso 3: Preparar el payload con el token
+#     payload = {
+#         'username': 'admin_xetid',
+#         'password': 'Xetid2019*',
+#         'logintoken': logintoken  # Agregar el token al payload
+#     }
+
+#     # Realizar la solicitud POST a Moodle
+#     response = requests.post(login_url, data=payload, verify=False)
+
+#     # Comprobar el código de estado de la respuesta
+#     if response.status_code != 200:
+#         raise HTTPException(status_code=response.status_code, detail="Error al conectar con Moodle")
+
+#     # Comprobar el contenido de la respuesta para determinar si el inicio de sesión falló
+#     if "Incorrect login or password" in response.text:
+#         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
+
+#     # Si todo está bien, retornar el contenido de la respuesta
+#     return HTMLResponse(content=response.content)
+    # if "loginerror" not in response.text:
+    #     print("Autenticación exitosa")
+    #     resp = RedirectResponse(url="https://preparatoria.xutil.cu")
+    #     cook = response.cookies.get("MoodleSession")
+    #     resp.set_cookie(key="MoodleSession", value=cook)
+    #     return JSONResponse(content={"data":{"url":"https://preparatoria.xutil.cu","MoodleSession":cook, "path":"/" }, "message":"Ok" }, status_code=200)
+    # else:
+    #     print("Error en la autenticación")
+    #     return JSONResponse(content={"data":None, "message":"Unauthorized" }, status_code=401)
 # @app.get("/login")
 # def generar_url_segura(course_id, user_id):
 #     # Genera un token con la información del curso y usuario
@@ -89,11 +233,11 @@ async def obtener_ip_cliente(request: Request):
 # MOODLE_URL = "https://preparatoria.xutil.cu"  # Cambia esto por tu URL de Moodle
 # LOGIN_URL = f"{MOODLE_URL}/login/index.php"
 
-# # Datos de usuario para login (ajusta con los datos correctos)
-# MOODLE_USERNAME = "probandocampos"
-# MOODLE_PASSWORD = "aS61idm2914ZcmAosd9ejh138*probandocampos"
+# # # Datos de usuario para login (ajusta con los datos correctos)
+# MOODLE_USERNAME = "admin_xetid"
+# MOODLE_PASSWORD = "Xetid2019*"
 
-# @app.post("/login")
+# @app.post("/login_cookies")
 # async def moodle_login():
 #     async with aiohttp.ClientSession() as session:
 #         # Primero, hacemos una solicitud GET a la página de login para obtener la cookie de sesión inicial
@@ -107,18 +251,19 @@ async def obtener_ip_cliente(request: Request):
 #         # Ahora, enviamos las credenciales al formulario de login
 #         login_data = {
 #             "username": MOODLE_USERNAME,
-#             "password": MOODLE_PASSWORD
+#             "password": MOODLE_PASSWORD    
 #         }
+#         print(cookies)
 
 #         async with session.post(LOGIN_URL, params=login_data, cookies=cookies,ssl =False) as login_response:
 #             if login_response.status != 200:
 #                 raise HTTPException(status_code=login_response.status, detail="Error al intentar autenticar")
 #             print(cookies)
-#             print(await login_response.content.read())
+#             # print(await login_response.content.read())
 #             print(login_response.url)
 #             # Verificamos si el login fue exitoso
-#             # if 'login/index.php' in str(login_response.url):
-#             #     return {"detail": "Error de autenticación. Verifica las credenciales."}
+#             if 'login/index.php' in str(login_response.url):
+#                 return {"detail": "Error de autenticación. Verifica las credenciales."}
             
 #             # Si login fue exitoso, ahora tenemos acceso a la sesión
 #             return {"detail": "Login exitoso", "cookies": session.cookie_jar.filter_cookies(MOODLE_URL)}
@@ -169,23 +314,7 @@ async def obtener_ip_cliente(request: Request):
     
 #     return {"message": "Logged in", "Set-Cookie": "joya"}
 
-# @app.post("/token")
-# async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-#     MOODLE_LOGIN_ENDPOINT = "/login/token.php"
-#     MOODLE_SERVICE = "miAPI"
-#     payload = {
-#         'username': form_data.username,
-#         'password': form_data.password,
-#         'service': MOODLE_SERVICE
-#     }
-#     response = requests.post(MOODLE_URL + MOODLE_LOGIN_ENDPOINT, data=payload)
-#     if response.status_code != 200:
-#         raise HTTPException(status_code=400, detail="Incorrect username or password")
-#     token_data = response.json()
-#     print(token_data)
-#     if 'token' not in token_data:
-#         raise HTTPException(status_code=400, detail="Incorrect username or password")
-#     return Token(access_token=token_data["token"], token_type="bearer")
+
 
 # @app.get("/users/me")
 # async def read_users_me(token: Annotated[str, Depends(oauth2_scheme)]):

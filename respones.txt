@@ -6,3 +6,796 @@ b'<!DOCTYPE html>\n<html  dir="ltr" lang="es" xml:lang="es">\n<head>\n    <title
    data-action="closesearch"\n                        data-toggle="collapse"\n                        href="#searchform-navbar"\n                        role="button"\n                    >\n                        <i class="icon fa fa-times fa-fw " aria-hidden="true"  ></i>\n                        <span class="sr-only">Cerrar</span>\n                    </a>\n                <div class="input-group-append">\n                    <button type="submit" class="btn btn-submit" data-action="submit">\n              
           <i class="icon fa fa-search fa-fw " aria-hidden="true"  ></i>\n                        <span class="sr-only">B\xc3\xbasqueda de curso</span>\n                    </button>\n                </div>\n            </div>\n        </form>\n    </div>\n    <a\n        class="btn btn-open rounded-0 nav-link"\n        data-toggle="collapse"\n        data-action="opensearch"\n        href="#searchform-navbar"\n        role="button"\n        aria-expanded="false"\n        aria-controls="searchform-navbar"\n        title="Selector de b\xc3\xbasqueda de entrada"\n    >\n        <i class="icon fa fa-search fa-fw " aria-hidden="true"  ></i>\n        <span class="sr-only">Selector de b\xc3\xbasqueda de entrada</span>\n    </a>\n</div>\n                            </li>\n\n\n\n\n                            \n\n                            \n                        </ul>\n                    </div>\n                </nav>\n            </div>\n        </div>\n    </div>\n\n\n</header><div class="container outercont">    <div id="page-content" class="row">\n        <div id="region-main-box" class="col-12">\n            <section id="region-main">\n            <div class="login-wrapper"><div class="login-container"><div role="main"><span id="maincontent"></span><div class="loginform">\n            <form class="login-form" action="https://preparatoria.xutil.cu/login/index.php" method="post" id="login">\n                <input type="hidden" name="logintoken" value="64mISmHNKKe9iPLlB1UK50fzq8Cr2tg7">\n                <div class="login-form-username form-group">\n                    <label for="username" class="sr-only">\n                            Nombre de usuario\n                    </label>\n                    <input type="text" name="username" id="username" class="form-control form-control-lg" value="probandocampo" placeholder="Nombre de usuario" autocomplete="username">\n                </div>\n               
  <div class="login-form-password form-group">\n                    <label for="password" class="sr-only">Contrase\xc3\xb1a</label>\n                    <input type="password" name="password" id="password" value="" class="form-control form-control-lg" placeholder="Contrase\xc3\xb1a" autocomplete="current-password">\n                </div>\n                <div class="login-form-submit form-group">\n                    <button class="loginbtn btn btn-primary btn-lg btn-block" type="submit" id="loginbtn">Acceder</button>\n                </div>\n                <div class="login-form-forgotpassword form-group">\n                    <a href="https://preparatoria.xutil.cu/login/forgot_password.php">\xc2\xbfOlvid\xc3\xb3 su contrase\xc3\xb1a?</a>\n                </div>\n            </form>\n        <div class="login-divider"></div>\n        <h2 class="login-heading">Algunos cursos permiten el acceso de invitados</h2>\n        <form action="https://preparatoria.xutil.cu/login/index.php" method="post" id="guestlogin">\n            <input type="hidden" name="logintoken" value="64mISmHNKKe9iPLlB1UK50fzq8Cr2tg7">\n            <input type="hidden" name="username" value="guest" />\n            <input type="hidden" name="password" value="guest" />\n            <button class="loginbtn btn btn-secondary btn-block" type="submit">Entrar como persona invitada</button>\n        </form>    <div class="login-divider"></div>\n    <div class="d-flex">\n        <button type="button" class="btn btn-secondary"  data-modal="alert" data-modal-title-str=\'["cookiesenabled", "core"]\'  data-modal-content-str=\'["cookiesenabled_help_html", "core"]\'>Aviso de Cookies</button>\n    </div>\n</div></div></div></div>            </section>\n        </div>\n    </div>\n</div>\n\n\n<footer id="page-footer" class="d-none d-lg-block">\n\n<div id="course-footer"></div><div class="container blockplace1"><div class="row"><div class="left-col col-4"><h4 dir="ltr" style="text-align:left;"><br /><strong></strong></h4><h4 dir="ltr" style="text-align:left;">Unidad Docente Xetid</h4><h4 dir="ltr" style="text-align:left;">Universidad Central "Marta Abreu" de Las Villas</h4><p>rvicenter@uclv.cu<br /></p></div><div class="left-col col-4"><h3>Enlaces de inter\xc3\xa9s</h3><p><br /></p><div style="margin-left:30px;" class="editor-indent"><h4>\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0 <a href="http://www.xetid.cu">Xetid</a></h4></div><p><br /></p><h4>\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0\xc2\xa0 <a href="http://www.uclv.edu.cu">UCLV</a><br /></h4><p dir="ltr" style="text-align:left;"><br /></p><p dir="ltr" style="text-align:left;"><br /></p></div></div></div>    <div class="info container2 clearfix">\n        <div class="container">\n            <div class="row">\n                <div class="tool_usertours-resettourcontainer"></div>\n                <div class="col-md-4 my-md-0 my-2 helplink"></div>                <div class="col-md-4 my-md-0 my-2">\n                    <div class="tool_dataprivacy"><a href="https://preparatoria.xutil.cu/admin/tool/dataprivacy/summary.php">Resumen de retenci\xc3\xb3n de datos</a></div>                </div>\n            </div>\n            <div class="row"><div class="col-12 my-md-0 my-2"></div>        </div>\n    </div>\n</footer>\n\n<div id="back-to-top"><i class="fa fa-angle-up "></i></div>\n\n</div></div><script>\n//<![CDATA[\nvar require = {\n    baseUrl : \'https://preparatoria.xutil.cu/lib/requirejs.php/1728311982/\',\n    // We only support AMD modules with an explicit define() statement.\n    enforceDefine: true,\n    skipDataMain: true,\n    waitSeconds : 0,\n\n    paths: {\n        jquery: \'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/jquery-3.6.1.min\',\n        jqueryui: \'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/ui-1.13.2/jquery-ui.min\',\n        jqueryprivate: \'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/jquery-private\'\n    },\n\n    // Custom jquery config map.\n    map: {\n      // \'*\' means all modules will get \'jqueryprivate\'\n      // for their \'jquery\' dependency.\n      \'*\': { jquery: \'jqueryprivate\' },\n      // Stub module for \'process\'. This is a workaround for a bug in MathJax (see MDL-60458).\n      \'*\': { process: \'core/first\' },\n\n      // \'jquery-private\' wants the real jQuery module\n      // though. If this line was not here, there would\n      // be an unresolvable cyclic dependency.\n      jqueryprivate: { jquery: \'jquery\' }\n    }\n};\n\n//]]>\n</script>\n<script src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/require.min.js"></script>\n<script>\n//<![CDATA[\nM.util.js_pending("core/first");\nrequire([\'core/first\'], function() {\nrequire([\'core/prefetch\'])\n;\nrequire(["media_videojs/loader"], function(loader) {\n    loader.setUp(\'es\');\n});;\nM.util.js_pending(\'theme_adaptable/adaptable\'); require([\'theme_adaptable/adaptable\'], function(amd) {amd.init(); M.util.js_complete(\'theme_adaptable/adaptable\');});;\nM.util.js_pending(\'theme_adaptable/bsoptions\'); require([\'theme_adaptable/bsoptions\'], function(amd) {amd.init({"stickynavbar":true}); M.util.js_complete(\'theme_adaptable/bsoptions\');});;\nM.util.js_pending(\'theme_adaptable/drawer\'); require([\'theme_adaptable/drawer\'], function(amd) {amd.init(); M.util.js_complete(\'theme_adaptable/drawer\');});;\n\nrequire(\n[\n    \'jquery\',\n],\nfunction(\n    $\n) {\n    var uniqid = "670b31ea4e795670b31ea4c6f62";\n    var container = $(\'#searchinput-navbar-\' + uniqid);\n    var opensearch = container.find(\'[data-action="opensearch"]\');\n    var input = container.find(\'[data-region="input"]\');\n    var submit = container.find(\'[data-action="submit"]\');\n\n    submit.on(\'click\', function(e) {\n        if (input.val() === \'\') {\n            e.preventDefault();\n        }\n    });\n    container.on(\'hidden.bs.collapse\', function() {\n        opensearch.removeClass(\'d-none\');\n        input.val(\'\');\n    });\n    container.on(\'show.bs.collapse\', function() {\n        opensearch.addClass(\'d-none\');\n    });\n    container.on(\'shown.bs.collapse\', function() {\n        input.focus();\n    });\n});\n;\n\n;\nM.util.js_pending(\'core/notification\'); require([\'core/notification\'], function(amd) {amd.init(1, []); M.util.js_complete(\'core/notification\');});;\nM.util.js_pending(\'core/log\'); require([\'core/log\'], function(amd) {amd.setConfig({"level":"trace"}); M.util.js_complete(\'core/log\');});;\nM.util.js_pending(\'core/page_global\'); require([\'core/page_global\'], function(amd) {amd.init(); M.util.js_complete(\'core/page_global\');});;\nM.util.js_pending(\'core/utility\'); require([\'core/utility\'], function(amd) {M.util.js_complete(\'core/utility\');});\n    M.util.js_complete("core/first");\n});\n//]]>\n</script>\n<script>\n//<![CDATA[\nM.str = {"moodle":{"lastmodified":"\\u00daltima modificaci\\u00f3n","name":"Nombre","error":"Error","info":"Informaci\\u00f3n","yes":"S\\u00ed","no":"No","cancel":"Cancelar","confirm":"Confirmar","areyousure":"\\u00bfEst\\u00e1 seguro?","closebuttontitle":"Cerrar","unknownerror":"Error desconocido","file":"Archivo","url":"URL","collapseall":"Colapsar todo","expandall":"Expandir todo"},"repository":{"type":"Tipo","size":"Tama\\u00f1o","invalidjson":"Cadena JSON no v\\u00e1lida","nofilesattached":"No se han adjuntado archivos","filepicker":"Selector de archivos","logout":"Salir","nofilesavailable":"No hay archivos disponibles","norepositoriesavailable":"Lo sentimos, ninguno de sus repositorios actuales puede devolver archivos en el formato solicitado.","fileexistsdialogheader":"El archivo existe","fileexistsdialog_editor":"Un archivo con ese nombre ha sido anexado al texto que Usted est\\u00e1 editando","fileexistsdialog_filemanager":"Ya ha sido anexado un archivo con ese nombre","renameto":"Cambiar el nombre a \\"{$a}\\"","referencesexist":"Existen {$a} enlaces a este archivo","select":"Seleccionar"},"admin":{"confirmdeletecomments":"\\u00bfSeguro que quiere eliminar el\\/los comentario(s) seleccionados?","confirmation":"Confirmaci\\u00f3n"},"debug":{"debuginfo":"Informaci\\u00f3n de depuraci\\u00f3n","line":"L\\u00ednea","stacktrace":"Trazado de la pila (stack)"},"langconfig":{"labelsep":":"}};\n//]]>\n</script>\n<script>\n//<![CDATA[\n(function() {Y.use("moodle-filter_mathjaxloader-loader",function() {M.filter_mathjaxloader.configure({"mathjaxconfig":"\\nMathJax.Hub.Config({\\n    config: [\\"Accessible.js\\", \\"Safe.js\\"],\\n    errorSettings: { message: [\\"!\\"] },\\n    skipStartupTypeset: true,\\n    messageStyle: \\"none\\"\\n});\\n","lang":"es"});\n});\nM.util.help_popups.setup(Y);\n M.util.js_pending(\'random670b31ea4c6f63\'); Y.on(\'domready\', function() { M.util.js_complete("init");  M.util.js_complete(\'random670b31ea4c6f63\'); });\n})();\n//]]>\n</script>\n<script type="text/javascript">\n    M.util.js_pending(\'theme_boost/loader\');\n        require([\'theme_boost/loader\'], function() {\n        M.util.js_complete(\'theme_boost/loader\');\n    });\n</script>\n</body>\n</html>\n'
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!DOCTYPE html>
+<html dir="ltr" lang="es" xml:lang="es">
+  <head>
+    <title>Campus Virtual de Xetid: Entrar al sitio</title>
+    <link rel="icon"
+      href="https://preparatoria.xutil.cu/pluginfile.php/1/core_admin/favicon/64x64/1728311981/%C3%ADndice.png" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords"
+      content="moodle, Campus Virtual de Xetid: Entrar al sitio" />
+    <link rel="stylesheet" type="text/css"
+      href="https://preparatoria.xutil.cu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple.css" /><script
+      id="firstthemesheet"
+      type="text/css">/** Required in order to fix style inclusion problems in IE with YUI **/</script><link
+      rel="stylesheet" type="text/css"
+      href="https://preparatoria.xutil.cu/theme/styles.php/adaptable/1728311981_1/all" />
+    <script>
+//<![CDATA[
+var M = {}; M.yui = {};
+M.pageloadstarttime = new Date();
+M.cfg = {"wwwroot":"https:\/\/preparatoria.xutil.cu","homeurl":{},"sesskey":"nGWFMzfmAy","sessiontimeout":"28800","sessiontimeoutwarning":"1200","themerev":"1728311981","slasharguments":1,"theme":"adaptable","iconsystemmodule":"core\/icon_system_fontawesome","jsrev":"1728311982","admin":"admin","svgicons":true,"usertimezone":"Am\u00e9rica\/La Habana","courseId":1,"courseContextId":2,"contextid":1,"contextInstanceId":0,"langrev":1728311982,"templaterev":"1728311982","developerdebug":true};var yui1ConfigFn = function(me) {if(/-skin|reset|fonts|grids|base/.test(me.name)){me.type='css';me.path=me.path.replace(/\.js/,'.css');me.path=me.path.replace(/\/yui2-skin/,'/assets/skins/sam/yui2-skin')}};
+var yui2ConfigFn = function(me) {var parts=me.name.replace(/^moodle-/,'').split('-'),component=parts.shift(),module=parts[0],min='-min';if(/-(skin|core)$/.test(me.name)){parts.pop();me.type='css';min=''}
+if(module){var filename=parts.join('-');me.path=component+'/'+module+'/'+filename+min+'.'+me.type}else{me.path=component+'/'+component+'.'+me.type}};
+YUI_config = {"debug":true,"base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/3.17.2\/","comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","combine":true,"filter":"RAW","insertBefore":"firstthemesheet","groups":{"yui2":{"base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/2in3\/2.9.0\/build\/","comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","combine":true,"ext":false,"root":"2in3\/2.9.0\/build\/","patterns":{"yui2-":{"group":"yui2","configFn":yui1ConfigFn}}},"moodle":{"name":"moodle","base":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?m\/1728311982\/","combine":true,"comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","ext":false,"root":"m\/1728311982\/","patterns":{"moodle-":{"group":"moodle","configFn":yui2ConfigFn}},"filter":"DEBUG","modules":{"moodle-core-formchangechecker":{"requires":["base","event-focus","moodle-core-event"]},"moodle-core-dragdrop":{"requires":["base","node","io","dom","dd","event-key","event-focus","moodle-core-notification"]},"moodle-core-event":{"requires":["event-custom"]},"moodle-core-chooserdialogue":{"requires":["base","panel","moodle-core-notification"]},"moodle-core-maintenancemodetimer":{"requires":["base","node"]},"moodle-core-blocks":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification"]},"moodle-core-lockscroll":{"requires":["plugin","base-build"]},"moodle-core-notification":{"requires":["moodle-core-notification-dialogue","moodle-core-notification-alert","moodle-core-notification-confirm","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-core-notification-dialogue":{"requires":["base","node","panel","escape","event-key","dd-plugin","moodle-core-widget-focusafterclose","moodle-core-lockscroll"]},"moodle-core-notification-alert":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-confirm":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-exception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-ajaxexception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-actionmenu":{"requires":["base","event","node-event-simulate"]},"moodle-core-handlebars":{"condition":{"trigger":"handlebars","when":"after"}},"moodle-core-tooltip":{"requires":["base","node","io-base","moodle-core-notification-dialogue","json-parse","widget-position","widget-position-align","event-outside","cache-base"]},"moodle-core-languninstallconfirm":{"requires":["base","node","moodle-core-notification-confirm","moodle-core-notification-alert"]},"moodle-core-popuphelp":{"requires":["moodle-core-tooltip"]},"moodle-core_availability-form":{"requires":["base","node","event","event-delegate","panel","moodle-core-notification-dialogue","json"]},"moodle-backup-backupselectall":{"requires":["node","event","node-event-simulate","anim"]},"moodle-backup-confirmcancel":{"requires":["node","node-event-simulate","moodle-core-notification-confirm"]},"moodle-course-management":{"requires":["base","node","io-base","moodle-core-notification-exception","json-parse","dd-constrain","dd-proxy","dd-drop","dd-delegate","node-event-delegate"]},"moodle-course-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-course-coursebase","moodle-course-util"]},"moodle-course-util":{"requires":["node"],"use":["moodle-course-util-base"],"submodules":{"moodle-course-util-base":{},"moodle-course-util-section":{"requires":["node","moodle-course-util-base"]},"moodle-course-util-cm":{"requires":["node","moodle-course-util-base"]}}},"moodle-course-categoryexpander":{"requires":["node","event-key"]},"moodle-form-shortforms":{"requires":["node","base","selector-css3","moodle-core-event"]},"moodle-form-dateselector":{"requires":["base","node","overlay","calendar"]},"moodle-form-passwordunmask":{"requires":[]},"moodle-question-preview":{"requires":["base","dom","event-delegate","event-key","core_question_engine"]},"moodle-question-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-question-searchform":{"requires":["base","node"]},"moodle-availability_completion-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_date-form":{"requires":["base","node","event","io","moodle-core_availability-form"]},"moodle-availability_grade-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_group-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_grouping-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_profile-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-mod_assign-history":{"requires":["node","transition"]},"moodle-mod_quiz-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-base","moodle-mod_quiz-util-page","moodle-mod_quiz-util-slot","moodle-course-util"]},"moodle-mod_quiz-modform":{"requires":["base","node","event"]},"moodle-mod_quiz-autosave":{"requires":["base","node","event","event-valuechange","node-event-delegate","io-form"]},"moodle-mod_quiz-toolboxes":{"requires":["base","node","event","event-key","io","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-slot","moodle-core-notification-ajaxexception"]},"moodle-mod_quiz-quizbase":{"requires":["base","node"]},"moodle-mod_quiz-questionchooser":{"requires":["moodle-core-chooserdialogue","moodle-mod_quiz-util","querystring-parse"]},"moodle-mod_quiz-util":{"requires":["node","moodle-core-actionmenu"],"use":["moodle-mod_quiz-util-base"],"submodules":{"moodle-mod_quiz-util-base":{},"moodle-mod_quiz-util-slot":{"requires":["node","moodle-mod_quiz-util-base"]},"moodle-mod_quiz-util-page":{"requires":["node","moodle-mod_quiz-util-base"]}}},"moodle-message_airnotifier-toolboxes":{"requires":["base","node","io"]},"moodle-filter_glossary-autolinker":{"requires":["base","node","io-base","json-parse","event-delegate","overlay","moodle-core-event","moodle-core-notification-alert","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-filter_mathjaxloader-loader":{"requires":["moodle-core-event"]},"moodle-editor_atto-rangy":{"requires":[]},"moodle-editor_atto-editor":{"requires":["node","transition","io","overlay","escape","event","event-simulate","event-custom","node-event-html5","node-event-simulate","yui-throttle","moodle-core-notification-dialogue","moodle-core-notification-confirm","moodle-editor_atto-rangy","handlebars","timers","querystring-stringify"]},"moodle-editor_atto-plugin":{"requires":["node","base","escape","event","event-outside","handlebars","event-custom","timers","moodle-editor_atto-menu"]},"moodle-editor_atto-menu":{"requires":["moodle-core-notification-dialogue","node","event","event-custom"]},"moodle-report_eventlist-eventfilter":{"requires":["base","event","node","node-event-delegate","datatable","autocomplete","autocomplete-filters"]},"moodle-report_loglive-fetchlogs":{"requires":["base","event","node","io","node-event-delegate"]},"moodle-gradereport_history-userselector":{"requires":["escape","event-delegate","event-key","handlebars","io-base","json-parse","moodle-core-notification-dialogue"]},"moodle-qbank_editquestion-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-tool_capability-search":{"requires":["base","node"]},"moodle-tool_lp-dragdrop-reorder":{"requires":["moodle-core-dragdrop"]},"moodle-tool_monitor-dropdown":{"requires":["base","event","node"]},"moodle-assignfeedback_editpdf-editor":{"requires":["base","event","node","io","graphics","json","event-move","event-resize","transition","querystring-stringify-simple","moodle-core-notification-dialog","moodle-core-notification-alert","moodle-core-notification-warning","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-atto_accessibilitychecker-button":{"requires":["color-base","moodle-editor_atto-plugin"]},"moodle-atto_accessibilityhelper-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_align-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_bold-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_charmap-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_clear-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_collapse-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emojipicker-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emoticon-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_equation-button":{"requires":["moodle-editor_atto-plugin","moodle-core-event","io","event-valuechange","tabview","array-extras"]},"moodle-atto_h5p-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_html-button":{"requires":["promise","moodle-editor_atto-plugin","moodle-atto_html-beautify","moodle-atto_html-codemirror","event-valuechange"]},"moodle-atto_html-beautify":{},"moodle-atto_html-codemirror":{"requires":["moodle-atto_html-codemirror-skin"]},"moodle-atto_image-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_indent-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_italic-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_link-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-usedfiles":{"requires":["node","escape"]},"moodle-atto_media-button":{"requires":["moodle-editor_atto-plugin","moodle-form-shortforms"]},"moodle-atto_noautolink-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_orderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_recordrtc-recording":{"requires":["moodle-atto_recordrtc-button"]},"moodle-atto_recordrtc-button":{"requires":["moodle-editor_atto-plugin","moodle-atto_recordrtc-recording"]},"moodle-atto_rtl-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_strike-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_subscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_superscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_table-button":{"requires":["moodle-editor_atto-plugin","moodle-editor_atto-menu","event","event-valuechange"]},"moodle-atto_title-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_underline-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_undo-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_unorderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_wordimport-button":{"requires":["moodle-editor_atto-plugin"]}}},"gallery":{"name":"gallery","base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/gallery\/","combine":true,"comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","ext":false,"root":"gallery\/1728311982\/","patterns":{"gallery-":{"group":"gallery"}}}},"modules":{"core_filepicker":{"name":"core_filepicker","fullpath":"https:\/\/preparatoria.xutil.cu\/lib\/javascript.php\/1728311982\/repository\/filepicker.js","requires":["base","node","node-event-simulate","json","async-queue","io-base","io-upload-iframe","io-form","yui2-treeview","panel","cookie","datatable","datatable-sort","resize-plugin","dd-plugin","escape","moodle-core_filepicker","moodle-core-notification-dialogue"]},"core_comment":{"name":"core_comment","fullpath":"https:\/\/preparatoria.xutil.cu\/lib\/javascript.php\/1728311982\/comment\/comment.js","requires":["base","io-base","node","json","yui2-animation","overlay","escape"]},"mathjax":{"name":"mathjax","fullpath":"https:\/\/cdn.jsdelivr.net\/npm\/mathjax@2.7.9\/MathJax.js?delayStartupUntil=configured"}}};
+M.yui.loader = {modules: {}};
+
+//]]>
+</script>
+
+    <meta name="robots" content="noindex" /> <!-- CSS print media -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:site" value="Campus Virtual de Xetid" />
+    <meta name="twitter:title"
+      value="Campus Virtual de Xetid: Entrar al sitio" />
+
+    <!-- Open Graph data -->
+    <meta property="og:title"
+      content="Campus Virtual de Xetid: Entrar al sitio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content />
+    <meta name="og:site_name" value="Campus Virtual de Xetid" />
+
+    <!-- Chrome, Firefox OS and Opera on Android topbar color -->
+    <meta name="theme-color" content="#0452CD" />
+
+    <!-- Windows Phone topbar color -->
+    <meta name="msapplication-navbutton-color" content="#0452CD" />
+
+    <!-- iOS Safari topbar color -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0452CD" />
+
+  </head>
+  <body id="page-login-index"
+    class="format-site  path-login dir-ltr lang-es yui-skin-sam yui3-skin-sam preparatoria-xutil-cu pagelayout-login course-1 context-1 notloggedin theme_adaptable two-column  header-style2 has-page-header  nomobilenavigation">
+
+    <div>
+      <a class="sr-only sr-only-focusable" href="#maincontent">Salta al
+        contenido principal</a>
+    </div><script
+      src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/polyfills/polyfill.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple.js"></script><script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/core/jquery-3.6.1.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/pace-min.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/jquery-flexslider-min.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/tickerme.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/jquery-easing-min.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/adaptable_v2_1_1_2.js"></script>
+    <script
+      src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/javascript-static.js"></script>
+    <script>
+//<![CDATA[
+document.body.className += ' jsenabled';
+//]]>
+</script>
+
+    <div id="page-wrapper">
+      <div id="page" class="fullin showblockicons standard">
+        <header id="adaptable-page-header-wrapper" class="stickything">
+          <div id="header2" class="above-header container">
+            <div class="row ">
+              <div class="d-none d-lg-block col-lg-6">
+                <div
+                  class="d-flex justify-content-start align-items-center h-100 bd-highlight">
+                  <div
+                    class="pb-2 pr-3 pt-2 bd-highlight d-none d-lg-inline-block"><a
+                      href=https://preparatoria.xutil.cu
+                      aria-label="Página Principal"
+                      title="Campus Virtual de Xetid"><img
+                        src=//preparatoria.xutil.cu/pluginfile.php/1/theme_adaptable/logo/1728311981/logo%20xetid%20redon%20dofondo%20blanco%20reducido.jpg
+                        id="logo" alt="Logo"></a></div>
+                  <div id="sitetitle"
+                    class="bd-highlight pt-2 d-none d-lg-inline-block"><h4><br /></h4><h5
+                      dir="ltr" style="text-align:center;"><strong>Campus
+                        Virtual Xetid</strong><br /></h5></div>
+                  <div id="course-header">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 p-0 my-auto">
+                <nav class="navbar navbar-expand btco-hover-menu">
+
+                  <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+
+                      <li class="nav-item navbarsearchsocial mx-md-1 my-auto">
+                        <div id="searchinput-navbar-67229ef9874f767229ef9814e02"
+                          class="simplesearchform">
+                          <div class="collapse" id="searchform-navbar">
+                            <form autocomplete="off"
+                              action="https://preparatoria.xutil.cu/course/search.php"
+                              method="get" accept-charset="utf-8"
+                              class="mform form-inline searchform-navbar">
+                              <input type="hidden" name="context" value="1">
+                              <div class="input-group">
+                                <label
+                                  for="searchinput-67229ef9874f767229ef9814e02">
+                                  <span class="sr-only">Búsqueda de curso</span>
+                                </label>
+                                <input type="text"
+                                  id="searchinput-67229ef9874f767229ef9814e02"
+                                  class="form-control withclear"
+                                  placeholder="Búsqueda de curso"
+                                  aria-label="Búsqueda de curso"
+                                  name="q"
+                                  data-region="input"
+                                  autocomplete="off">
+                                <a class="btn btn-close"
+                                  data-action="closesearch"
+                                  data-toggle="collapse"
+                                  href="#searchform-navbar"
+                                  role="button">
+                                  <i class="icon fa fa-times fa-fw "
+                                    aria-hidden="true"></i>
+                                  <span class="sr-only">Cerrar</span>
+                                </a>
+                                <div class="input-group-append">
+                                  <button type="submit" class="btn btn-submit"
+                                    data-action="submit">
+                                    <i class="icon fa fa-search fa-fw "
+                                      aria-hidden="true"></i>
+                                    <span class="sr-only">Búsqueda de
+                                      curso</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <a
+                            class="btn btn-open rounded-0 nav-link"
+                            data-toggle="collapse"
+                            data-action="opensearch"
+                            href="#searchform-navbar"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="searchform-navbar"
+                            title="Selector de búsqueda de entrada">
+                            <i class="icon fa fa-search fa-fw "
+                              aria-hidden="true"></i>
+                            <span class="sr-only">Selector de búsqueda de
+                              entrada</span>
+                          </a>
+                        </div>
+                      </li>
+
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+        </header><div class="container outercont"> <div id="page-content"
+            class="row">
+            <div id="region-main-box" class="col-12">
+              <section id="region-main">
+                <div class="login-wrapper"><div class="login-container"><div
+                      role="main"><span id="maincontent"></span><div
+                        class="loginform">
+                        <form class="login-form"
+                          action="https://preparatoria.xutil.cu/login/index.php"
+                          method="post" id="login">
+                          <input type="hidden" name="logintoken"
+                            value="81txWSJKPJfJm8b2UMXyBMKKEYOhL1vN">
+                          <div class="login-form-username form-group">
+                            <label for="username" class="sr-only">
+                              Nombre de usuario
+                            </label>
+                            <input type="text" name="username" id="username"
+                              class="form-control form-control-lg"
+                              value="admin_xetid"
+                              placeholder="Nombre de usuario"
+                              autocomplete="username">
+                          </div>
+                          <div class="login-form-password form-group">
+                            <label for="password"
+                              class="sr-only">Contraseña</label>
+                            <input type="password" name="password" id="password"
+                              value class="form-control form-control-lg"
+                              placeholder="Contraseña"
+                              autocomplete="current-password">
+                          </div>
+                          <div class="login-form-submit form-group">
+                            <button
+                              class="loginbtn btn btn-primary btn-lg btn-block"
+                              type="submit" id="loginbtn">Acceder</button>
+                          </div>
+                          <div class="login-form-forgotpassword form-group">
+                            <a
+                              href="https://preparatoria.xutil.cu/login/forgot_password.php">¿Olvidó
+                              su contraseña?</a>
+                          </div>
+                        </form>
+                        <div class="login-divider"></div>
+                        <h2 class="login-heading">Algunos cursos permiten el
+                          acceso de invitados</h2>
+                        <form
+                          action="https://preparatoria.xutil.cu/login/index.php"
+                          method="post" id="guestlogin">
+                          <input type="hidden" name="logintoken"
+                            value="81txWSJKPJfJm8b2UMXyBMKKEYOhL1vN">
+                          <input type="hidden" name="username" value="guest" />
+                          <input type="hidden" name="password" value="guest" />
+                          <button class="loginbtn btn btn-secondary btn-block"
+                            type="submit">Entrar como persona invitada</button>
+                        </form> <div class="login-divider"></div>
+                        <div class="d-flex">
+                          <button type="button" class="btn btn-secondary"
+                            data-modal="alert"
+                            data-modal-title-str='["cookiesenabled", "core"]'
+                            data-modal-content-str='["cookiesenabled_help_html", "core"]'>Aviso
+                            de Cookies</button>
+                        </div>
+                      </div></div></div></div> </section>
+            </div>
+          </div>
+        </div>
+
+        <footer id="page-footer" class="d-none d-lg-block">
+
+          <div id="course-footer"></div><div class="container blockplace1"><div
+              class="row"><div class="left-col col-4"><h4 dir="ltr"
+                  style="text-align:left;"><br /><strong></strong></h4><h4
+                  dir="ltr" style="text-align:left;">Unidad Docente
+                  Xetid</h4><h4 dir="ltr" style="text-align:left;">Universidad
+                  Central "Marta Abreu" de Las
+                  Villas</h4><p>rvicenter@uclv.cu<br /></p></div><div
+                class="left-col col-4"><h3>Enlaces de
+                  interés</h3><p><br /></p><div style="margin-left:30px;"
+                  class="editor-indent"><h4> <a
+                      href="http://www.xetid.cu">Xetid</a></h4></div><p><br /></p><h4>
+                  <a href="http://www.uclv.edu.cu">UCLV</a><br /></h4><p
+                  dir="ltr" style="text-align:left;"><br /></p><p dir="ltr"
+                  style="text-align:left;"><br /></p></div></div></div> <div
+            class="info container2 clearfix">
+            <div class="container">
+              <div class="row">
+                <div class="tool_usertours-resettourcontainer"></div>
+                <div class="col-md-4 my-md-0 my-2 helplink"></div> <div
+                  class="col-md-4 my-md-0 my-2">
+                  <div class="tool_dataprivacy"><a
+                      href="https://preparatoria.xutil.cu/admin/tool/dataprivacy/summary.php">Resumen
+                      de retención de datos</a></div> </div>
+              </div>
+              <div class="row"><div class="col-12 my-md-0 my-2"></div> </div>
+            </div>
+          </footer>
+
+          <div id="back-to-top"><i class="fa fa-angle-up "></i></div>
+
+        </div></div><script>
+//<![CDATA[
+var require = {
+    baseUrl : 'https://preparatoria.xutil.cu/lib/requirejs.php/1728311982/',
+    // We only support AMD modules with an explicit define() statement.
+    enforceDefine: true,
+    skipDataMain: true,
+    waitSeconds : 0,
+
+    paths: {
+        jquery: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/jquery-3.6.1.min',
+        jqueryui: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/ui-1.13.2/jquery-ui.min',
+        jqueryprivate: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/jquery-private'
+    },
+
+    // Custom jquery config map.
+    map: {
+      // '*' means all modules will get 'jqueryprivate'
+      // for their 'jquery' dependency.
+      '*': { jquery: 'jqueryprivate' },
+      // Stub module for 'process'. This is a workaround for a bug in MathJax (see MDL-60458).
+      '*': { process: 'core/first' },
+
+      // 'jquery-private' wants the real jQuery module
+      // though. If this line was not here, there would
+      // be an unresolvable cyclic dependency.
+      jqueryprivate: { jquery: 'jquery' }
+    }
+};
+
+//]]>
+</script>
+      <script
+        src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/require.min.js"></script>
+      <script>
+//<![CDATA[
+M.util.js_pending("core/first");
+require(['core/first'], function() {
+require(['core/prefetch'])
+;
+require(["media_videojs/loader"], function(loader) {
+    loader.setUp('es');
+});;
+M.util.js_pending('theme_adaptable/adaptable'); require(['theme_adaptable/adaptable'], function(amd) {amd.init(); M.util.js_complete('theme_adaptable/adaptable');});;
+M.util.js_pending('theme_adaptable/bsoptions'); require(['theme_adaptable/bsoptions'], function(amd) {amd.init({"stickynavbar":true}); M.util.js_complete('theme_adaptable/bsoptions');});;
+M.util.js_pending('theme_adaptable/drawer'); require(['theme_adaptable/drawer'], function(amd) {amd.init(); M.util.js_complete('theme_adaptable/drawer');});;
+
+require(
+[
+    'jquery',
+],
+function(
+    $
+) {
+    var uniqid = "67229ef9874f767229ef9814e02";
+    var container = $('#searchinput-navbar-' + uniqid);
+    var opensearch = container.find('[data-action="opensearch"]');
+    var input = container.find('[data-region="input"]');
+    var submit = container.find('[data-action="submit"]');
+
+    submit.on('click', function(e) {
+        if (input.val() === '') {
+            e.preventDefault();
+        }
+    });
+    container.on('hidden.bs.collapse', function() {
+        opensearch.removeClass('d-none');
+        input.val('');
+    });
+    container.on('show.bs.collapse', function() {
+        opensearch.addClass('d-none');
+    });
+    container.on('shown.bs.collapse', function() {
+        input.focus();
+    });
+});
+;
+
+;
+M.util.js_pending('core/notification'); require(['core/notification'], function(amd) {amd.init(1, []); M.util.js_complete('core/notification');});;
+M.util.js_pending('core/log'); require(['core/log'], function(amd) {amd.setConfig({"level":"trace"}); M.util.js_complete('core/log');});;
+M.util.js_pending('core/page_global'); require(['core/page_global'], function(amd) {amd.init(); M.util.js_complete('core/page_global');});;
+M.util.js_pending('core/utility'); require(['core/utility'], function(amd) {M.util.js_complete('core/utility');});
+    M.util.js_complete("core/first");
+});
+//]]>
+</script>
+      <script>
+//<![CDATA[
+M.str = {"moodle":{"lastmodified":"\u00daltima modificaci\u00f3n","name":"Nombre","error":"Error","info":"Informaci\u00f3n","yes":"S\u00ed","no":"No","cancel":"Cancelar","confirm":"Confirmar","areyousure":"\u00bfEst\u00e1 seguro?","closebuttontitle":"Cerrar","unknownerror":"Error desconocido","file":"Archivo","url":"URL","collapseall":"Colapsar todo","expandall":"Expandir todo"},"repository":{"type":"Tipo","size":"Tama\u00f1o","invalidjson":"Cadena JSON no v\u00e1lida","nofilesattached":"No se han adjuntado archivos","filepicker":"Selector de archivos","logout":"Salir","nofilesavailable":"No hay archivos disponibles","norepositoriesavailable":"Lo sentimos, ninguno de sus repositorios actuales puede devolver archivos en el formato solicitado.","fileexistsdialogheader":"El archivo existe","fileexistsdialog_editor":"Un archivo con ese nombre ha sido anexado al texto que Usted est\u00e1 editando","fileexistsdialog_filemanager":"Ya ha sido anexado un archivo con ese nombre","renameto":"Cambiar el nombre a \"{$a}\"","referencesexist":"Existen {$a} enlaces a este archivo","select":"Seleccionar"},"admin":{"confirmdeletecomments":"\u00bfSeguro que quiere eliminar el\/los comentario(s) seleccionados?","confirmation":"Confirmaci\u00f3n"},"debug":{"debuginfo":"Informaci\u00f3n de depuraci\u00f3n","line":"L\u00ednea","stacktrace":"Trazado de la pila (stack)"},"langconfig":{"labelsep":":"}};
+//]]>
+</script>
+      <script>
+//<![CDATA[
+(function() {Y.use("moodle-filter_mathjaxloader-loader",function() {M.filter_mathjaxloader.configure({"mathjaxconfig":"\nMathJax.Hub.Config({\n    config: [\"Accessible.js\", \"Safe.js\"],\n    errorSettings: { message: [\"!\"] },\n    skipStartupTypeset: true,\n    messageStyle: \"none\"\n});\n","lang":"es"});
+});
+M.util.help_popups.setup(Y);
+ M.util.js_pending('random67229ef9814e03'); Y.on('domready', function() { M.util.js_complete("init");  M.util.js_complete('random67229ef9814e03'); });
+})();
+//]]>
+</script>
+      <script type="text/javascript">
+    M.util.js_pending('theme_boost/loader');
+        require(['theme_boost/loader'], function() {
+        M.util.js_complete('theme_boost/loader');
+    });
+</script>
+    </body>
+  </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!DOCTYPE html>
+<html  dir="ltr" lang="es" xml:lang="es">
+<head>
+    <title>Campus Virtual de Xetid: Entrar al sitio</title>
+    <link rel="icon" href="https://preparatoria.xutil.cu/pluginfile.php/1/core_admin/favicon/64x64/1728311981/%C3%ADndice.png" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="moodle, Campus Virtual de Xetid: Entrar al sitio" />
+<link rel="stylesheet" type="text/css" href="https://preparatoria.xutil.cu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple.css" /><script id="firstthemesheet" type="text/css">/** Required in order to fix style inclusion problems in IE with YUI **/</script><link rel="stylesheet" type="text/css" href="https://preparatoria.xutil.cu/theme/styles.php/adaptable/1728311981_1/all" />
+<script>
+//<![CDATA[
+var M = {}; M.yui = {};
+M.pageloadstarttime = new Date();
+M.cfg = {"wwwroot":"https:\/\/preparatoria.xutil.cu","homeurl":{},"sesskey":"U1a0gBkTKn","sessiontimeout":"28800","sessiontimeoutwarning":"1200","themerev":"1728311981","slasharguments":1,"theme":"adaptable","iconsystemmodule":"core\/icon_system_fontawesome","jsrev":"1728311982","admin":"admin","svgicons":true,"usertimezone":"Am\u00e9rica\/La Habana","courseId":1,"courseContextId":2,"contextid":1,"contextInstanceId":0,"langrev":1728311982,"templaterev":"1728311982","developerdebug":true};var yui1ConfigFn = function(me) {if(/-skin|reset|fonts|grids|base/.test(me.name)){me.type='css';me.path=me.path.replace(/\.js/,'.css');me.path=me.path.replace(/\/yui2-skin/,'/assets/skins/sam/yui2-skin')}};
+var yui2ConfigFn = function(me) {var parts=me.name.replace(/^moodle-/,'').split('-'),component=parts.shift(),module=parts[0],min='-min';if(/-(skin|core)$/.test(me.name)){parts.pop();me.type='css';min=''}
+if(module){var filename=parts.join('-');me.path=component+'/'+module+'/'+filename+min+'.'+me.type}else{me.path=component+'/'+component+'.'+me.type}};
+YUI_config = {"debug":true,"base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/3.17.2\/","comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","combine":true,"filter":"RAW","insertBefore":"firstthemesheet","groups":{"yui2":{"base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/2in3\/2.9.0\/build\/","comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","combine":true,"ext":false,"root":"2in3\/2.9.0\/build\/","patterns":{"yui2-":{"group":"yui2","configFn":yui1ConfigFn}}},"moodle":{"name":"moodle","base":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?m\/1728311982\/","combine":true,"comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","ext":false,"root":"m\/1728311982\/","patterns":{"moodle-":{"group":"moodle","configFn":yui2ConfigFn}},"filter":"DEBUG","modules":{"moodle-core-formchangechecker":{"requires":["base","event-focus","moodle-core-event"]},"moodle-core-dragdrop":{"requires":["base","node","io","dom","dd","event-key","event-focus","moodle-core-notification"]},"moodle-core-event":{"requires":["event-custom"]},"moodle-core-chooserdialogue":{"requires":["base","panel","moodle-core-notification"]},"moodle-core-maintenancemodetimer":{"requires":["base","node"]},"moodle-core-blocks":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification"]},"moodle-core-lockscroll":{"requires":["plugin","base-build"]},"moodle-core-notification":{"requires":["moodle-core-notification-dialogue","moodle-core-notification-alert","moodle-core-notification-confirm","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-core-notification-dialogue":{"requires":["base","node","panel","escape","event-key","dd-plugin","moodle-core-widget-focusafterclose","moodle-core-lockscroll"]},"moodle-core-notification-alert":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-confirm":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-exception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-notification-ajaxexception":{"requires":["moodle-core-notification-dialogue"]},"moodle-core-actionmenu":{"requires":["base","event","node-event-simulate"]},"moodle-core-handlebars":{"condition":{"trigger":"handlebars","when":"after"}},"moodle-core-tooltip":{"requires":["base","node","io-base","moodle-core-notification-dialogue","json-parse","widget-position","widget-position-align","event-outside","cache-base"]},"moodle-core-languninstallconfirm":{"requires":["base","node","moodle-core-notification-confirm","moodle-core-notification-alert"]},"moodle-core-popuphelp":{"requires":["moodle-core-tooltip"]},"moodle-core_availability-form":{"requires":["base","node","event","event-delegate","panel","moodle-core-notification-dialogue","json"]},"moodle-backup-backupselectall":{"requires":["node","event","node-event-simulate","anim"]},"moodle-backup-confirmcancel":{"requires":["node","node-event-simulate","moodle-core-notification-confirm"]},"moodle-course-management":{"requires":["base","node","io-base","moodle-core-notification-exception","json-parse","dd-constrain","dd-proxy","dd-drop","dd-delegate","node-event-delegate"]},"moodle-course-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-course-coursebase","moodle-course-util"]},"moodle-course-util":{"requires":["node"],"use":["moodle-course-util-base"],"submodules":{"moodle-course-util-base":{},"moodle-course-util-section":{"requires":["node","moodle-course-util-base"]},"moodle-course-util-cm":{"requires":["node","moodle-course-util-base"]}}},"moodle-course-categoryexpander":{"requires":["node","event-key"]},"moodle-form-shortforms":{"requires":["node","base","selector-css3","moodle-core-event"]},"moodle-form-dateselector":{"requires":["base","node","overlay","calendar"]},"moodle-form-passwordunmask":{"requires":[]},"moodle-question-preview":{"requires":["base","dom","event-delegate","event-key","core_question_engine"]},"moodle-question-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-question-searchform":{"requires":["base","node"]},"moodle-availability_completion-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_date-form":{"requires":["base","node","event","io","moodle-core_availability-form"]},"moodle-availability_grade-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_group-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_grouping-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-availability_profile-form":{"requires":["base","node","event","moodle-core_availability-form"]},"moodle-mod_assign-history":{"requires":["node","transition"]},"moodle-mod_quiz-dragdrop":{"requires":["base","node","io","dom","dd","dd-scroll","moodle-core-dragdrop","moodle-core-notification","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-base","moodle-mod_quiz-util-page","moodle-mod_quiz-util-slot","moodle-course-util"]},"moodle-mod_quiz-modform":{"requires":["base","node","event"]},"moodle-mod_quiz-autosave":{"requires":["base","node","event","event-valuechange","node-event-delegate","io-form"]},"moodle-mod_quiz-toolboxes":{"requires":["base","node","event","event-key","io","moodle-mod_quiz-quizbase","moodle-mod_quiz-util-slot","moodle-core-notification-ajaxexception"]},"moodle-mod_quiz-quizbase":{"requires":["base","node"]},"moodle-mod_quiz-questionchooser":{"requires":["moodle-core-chooserdialogue","moodle-mod_quiz-util","querystring-parse"]},"moodle-mod_quiz-util":{"requires":["node","moodle-core-actionmenu"],"use":["moodle-mod_quiz-util-base"],"submodules":{"moodle-mod_quiz-util-base":{},"moodle-mod_quiz-util-slot":{"requires":["node","moodle-mod_quiz-util-base"]},"moodle-mod_quiz-util-page":{"requires":["node","moodle-mod_quiz-util-base"]}}},"moodle-message_airnotifier-toolboxes":{"requires":["base","node","io"]},"moodle-filter_glossary-autolinker":{"requires":["base","node","io-base","json-parse","event-delegate","overlay","moodle-core-event","moodle-core-notification-alert","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-filter_mathjaxloader-loader":{"requires":["moodle-core-event"]},"moodle-editor_atto-rangy":{"requires":[]},"moodle-editor_atto-editor":{"requires":["node","transition","io","overlay","escape","event","event-simulate","event-custom","node-event-html5","node-event-simulate","yui-throttle","moodle-core-notification-dialogue","moodle-core-notification-confirm","moodle-editor_atto-rangy","handlebars","timers","querystring-stringify"]},"moodle-editor_atto-plugin":{"requires":["node","base","escape","event","event-outside","handlebars","event-custom","timers","moodle-editor_atto-menu"]},"moodle-editor_atto-menu":{"requires":["moodle-core-notification-dialogue","node","event","event-custom"]},"moodle-report_eventlist-eventfilter":{"requires":["base","event","node","node-event-delegate","datatable","autocomplete","autocomplete-filters"]},"moodle-report_loglive-fetchlogs":{"requires":["base","event","node","io","node-event-delegate"]},"moodle-gradereport_history-userselector":{"requires":["escape","event-delegate","event-key","handlebars","io-base","json-parse","moodle-core-notification-dialogue"]},"moodle-qbank_editquestion-chooser":{"requires":["moodle-core-chooserdialogue"]},"moodle-tool_capability-search":{"requires":["base","node"]},"moodle-tool_lp-dragdrop-reorder":{"requires":["moodle-core-dragdrop"]},"moodle-tool_monitor-dropdown":{"requires":["base","event","node"]},"moodle-assignfeedback_editpdf-editor":{"requires":["base","event","node","io","graphics","json","event-move","event-resize","transition","querystring-stringify-simple","moodle-core-notification-dialog","moodle-core-notification-alert","moodle-core-notification-warning","moodle-core-notification-exception","moodle-core-notification-ajaxexception"]},"moodle-atto_accessibilitychecker-button":{"requires":["color-base","moodle-editor_atto-plugin"]},"moodle-atto_accessibilityhelper-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_align-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_bold-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_charmap-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_clear-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_collapse-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emojipicker-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_emoticon-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_equation-button":{"requires":["moodle-editor_atto-plugin","moodle-core-event","io","event-valuechange","tabview","array-extras"]},"moodle-atto_h5p-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_html-button":{"requires":["promise","moodle-editor_atto-plugin","moodle-atto_html-beautify","moodle-atto_html-codemirror","event-valuechange"]},"moodle-atto_html-beautify":{},"moodle-atto_html-codemirror":{"requires":["moodle-atto_html-codemirror-skin"]},"moodle-atto_image-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_indent-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_italic-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_link-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_managefiles-usedfiles":{"requires":["node","escape"]},"moodle-atto_media-button":{"requires":["moodle-editor_atto-plugin","moodle-form-shortforms"]},"moodle-atto_noautolink-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_orderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_recordrtc-recording":{"requires":["moodle-atto_recordrtc-button"]},"moodle-atto_recordrtc-button":{"requires":["moodle-editor_atto-plugin","moodle-atto_recordrtc-recording"]},"moodle-atto_rtl-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_strike-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_subscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_superscript-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_table-button":{"requires":["moodle-editor_atto-plugin","moodle-editor_atto-menu","event","event-valuechange"]},"moodle-atto_title-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_underline-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_undo-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_unorderedlist-button":{"requires":["moodle-editor_atto-plugin"]},"moodle-atto_wordimport-button":{"requires":["moodle-editor_atto-plugin"]}}},"gallery":{"name":"gallery","base":"https:\/\/preparatoria.xutil.cu\/lib\/yuilib\/gallery\/","combine":true,"comboBase":"https:\/\/preparatoria.xutil.cu\/theme\/yui_combo.php?","ext":false,"root":"gallery\/1728311982\/","patterns":{"gallery-":{"group":"gallery"}}}},"modules":{"core_filepicker":{"name":"core_filepicker","fullpath":"https:\/\/preparatoria.xutil.cu\/lib\/javascript.php\/1728311982\/repository\/filepicker.js","requires":["base","node","node-event-simulate","json","async-queue","io-base","io-upload-iframe","io-form","yui2-treeview","panel","cookie","datatable","datatable-sort","resize-plugin","dd-plugin","escape","moodle-core_filepicker","moodle-core-notification-dialogue"]},"core_comment":{"name":"core_comment","fullpath":"https:\/\/preparatoria.xutil.cu\/lib\/javascript.php\/1728311982\/comment\/comment.js","requires":["base","io-base","node","json","yui2-animation","overlay","escape"]},"mathjax":{"name":"mathjax","fullpath":"https:\/\/cdn.jsdelivr.net\/npm\/mathjax@2.7.9\/MathJax.js?delayStartupUntil=configured"}}};
+M.yui.loader = {modules: {}};
+
+//]]>
+</script>
+
+<meta name="robots" content="noindex" />    <!-- CSS print media -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="summary">
+    <meta name="twitter:site" value="Campus Virtual de Xetid" />
+    <meta name="twitter:title" value="Campus Virtual de Xetid: Entrar al sitio" />
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Campus Virtual de Xetid: Entrar al sitio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta name="og:site_name" value="Campus Virtual de Xetid" />
+
+    <!-- Chrome, Firefox OS and Opera on Android topbar color -->
+    <meta name="theme-color" content="#0452CD" />
+
+    <!-- Windows Phone topbar color -->
+    <meta name="msapplication-navbutton-color" content="#0452CD" />
+
+    <!-- iOS Safari topbar color -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0452CD" />
+
+    </head>
+<body  id="page-login-index" class="format-site  path-login dir-ltr lang-es yui-skin-sam yui3-skin-sam preparatoria-xutil-cu pagelayout-login course-1 context-1 notloggedin theme_adaptable two-column  header-style2 has-page-header  nomobilenavigation">
+
+<div>
+    <a class="sr-only sr-only-focusable" href="#maincontent">Salta al contenido principal</a>
+</div><script src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/polyfills/polyfill.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/yui_combo.php?rollup/3.17.2/yui-moodlesimple.js"></script><script src="https://preparatoria.xutil.cu/theme/jquery.php/core/jquery-3.6.1.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/pace-min.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/jquery-flexslider-min.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/tickerme.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/jquery-easing-min.js"></script>
+<script src="https://preparatoria.xutil.cu/theme/jquery.php/theme_adaptable/adaptable_v2_1_1_2.js"></script>
+<script src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/javascript-static.js"></script>
+<script>
+//<![CDATA[
+document.body.className += ' jsenabled';
+//]]>
+</script>
+
+
+<div id="page-wrapper">
+    <div id="page" class="fullin showblockicons standard">
+    <header id="adaptable-page-header-wrapper" class="stickything">
+    <div id="header2" class="above-header container">
+        <div class="row ">
+            <div class="d-none d-lg-block col-lg-6">
+                <div class="d-flex justify-content-start align-items-center h-100 bd-highlight">
+                    <div class="pb-2 pr-3 pt-2 bd-highlight d-none d-lg-inline-block"><a href=https://preparatoria.xutil.cu aria-label="Página Principal" title="Campus Virtual de Xetid"><img src=//preparatoria.xutil.cu/pluginfile.php/1/theme_adaptable/logo/1728311981/logo%20xetid%20redon%20dofondo%20blanco%20reducido.jpg id="logo" alt="Logo"></a></div>
+                    <div id="sitetitle" class="bd-highlight pt-2 d-none d-lg-inline-block"><h4><br /></h4><h5 dir="ltr" style="text-align:center;"><strong>Campus Virtual Xetid</strong><br /></h5></div>
+                    <div id="course-header">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 p-0 my-auto">
+                <nav class="navbar navbar-expand btco-hover-menu">
+
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav ml-auto">
+
+                            <li class="nav-item navbarsearchsocial mx-md-1 my-auto">
+                                <div id="searchinput-navbar-6722abc86677a6722abc8621032" class="simplesearchform">
+    <div class="collapse" id="searchform-navbar">
+        <form autocomplete="off" action="https://preparatoria.xutil.cu/course/search.php" method="get" accept-charset="utf-8" class="mform form-inline searchform-navbar">
+                <input type="hidden" name="context" value="1">
+            <div class="input-group">
+                <label for="searchinput-6722abc86677a6722abc8621032">
+                    <span class="sr-only">Búsqueda de curso</span>
+                </label>
+                    <input type="text"
+                       id="searchinput-6722abc86677a6722abc8621032"
+                       class="form-control withclear"
+                       placeholder="Búsqueda de curso"
+                       aria-label="Búsqueda de curso"
+                       name="q"
+                       data-region="input"
+                       autocomplete="off"
+                    >
+                    <a class="btn btn-close"
+                        data-action="closesearch"
+                        data-toggle="collapse"
+                        href="#searchform-navbar"
+                        role="button"
+                    >
+                        <i class="icon fa fa-times fa-fw " aria-hidden="true"  ></i>
+                        <span class="sr-only">Cerrar</span>
+                    </a>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-submit" data-action="submit">
+                        <i class="icon fa fa-search fa-fw " aria-hidden="true"  ></i>
+                        <span class="sr-only">Búsqueda de curso</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <a
+        class="btn btn-open rounded-0 nav-link"
+        data-toggle="collapse"
+        data-action="opensearch"
+        href="#searchform-navbar"
+        role="button"
+        aria-expanded="false"
+        aria-controls="searchform-navbar"
+        title="Selector de búsqueda de entrada"
+    >
+        <i class="icon fa fa-search fa-fw " aria-hidden="true"  ></i>
+        <span class="sr-only">Selector de búsqueda de entrada</span>
+    </a>
+</div>
+                            </li>
+
+
+
+
+                            
+
+                            
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+</header><div class="container outercont">    <div id="page-content" class="row">
+        <div id="region-main-box" class="col-12">
+            <section id="region-main">
+            <div class="login-wrapper"><div class="login-container"><div role="main"><span id="maincontent"></span><div class="loginform">
+            <form class="login-form" action="https://preparatoria.xutil.cu/login/index.php" method="post" id="login">
+                <input type="hidden" name="logintoken" value="fJ40LHmvCvDNcA2OtL7xKvN3ZuxuBlah">
+                <div class="login-form-username form-group">
+                    <label for="username" class="sr-only">
+                            Nombre de usuario
+                    </label>
+                    <input type="text" name="username" id="username" class="form-control form-control-lg" value="marloneamil5" placeholder="Nombre de usuario" autocomplete="username">
+                </div>
+                <div class="login-form-password form-group">
+                    <label for="password" class="sr-only">Contraseña</label>
+                    <input type="password" name="password" id="password" value="" class="form-control form-control-lg" placeholder="Contraseña" autocomplete="current-password">
+                </div>
+                <div class="login-form-submit form-group">
+                    <button class="loginbtn btn btn-primary btn-lg btn-block" type="submit" id="loginbtn">Acceder</button>
+                </div>
+                <div class="login-form-forgotpassword form-group">
+                    <a href="https://preparatoria.xutil.cu/login/forgot_password.php">¿Olvidó su contraseña?</a>
+                </div>
+            </form>
+        <div class="login-divider"></div>
+        <h2 class="login-heading">Algunos cursos permiten el acceso de invitados</h2>
+        <form action="https://preparatoria.xutil.cu/login/index.php" method="post" id="guestlogin">
+            <input type="hidden" name="logintoken" value="fJ40LHmvCvDNcA2OtL7xKvN3ZuxuBlah">
+            <input type="hidden" name="username" value="guest" />
+            <input type="hidden" name="password" value="guest" />
+            <button class="loginbtn btn btn-secondary btn-block" type="submit">Entrar como persona invitada</button>
+        </form>    <div class="login-divider"></div>
+    <div class="d-flex">
+        <button type="button" class="btn btn-secondary"  data-modal="alert" data-modal-title-str='["cookiesenabled", "core"]'  data-modal-content-str='["cookiesenabled_help_html", "core"]'>Aviso de Cookies</button>
+    </div>
+</div></div></div></div>            </section>
+        </div>
+    </div>
+</div>
+
+
+<footer id="page-footer" class="d-none d-lg-block">
+
+<div id="course-footer"></div><div class="container blockplace1"><div class="row"><div class="left-col col-4"><h4 dir="ltr" style="text-align:left;"><br /><strong></strong></h4><h4 dir="ltr" style="text-align:left;">Unidad Docente Xetid</h4><h4 dir="ltr" style="text-align:left;">Universidad Central "Marta Abreu" de Las Villas</h4><p>rvicenter@uclv.cu<br /></p></div><div class="left-col col-4"><h3>Enlaces de interés</h3><p><br /></p><div style="margin-left:30px;" class="editor-indent"><h4>          <a href="http://www.xetid.cu">Xetid</a></h4></div><p><br /></p><h4>               <a href="http://www.uclv.edu.cu">UCLV</a><br /></h4><p dir="ltr" style="text-align:left;"><br /></p><p dir="ltr" style="text-align:left;"><br /></p></div></div></div>    <div class="info container2 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="tool_usertours-resettourcontainer"></div>
+                <div class="col-md-4 my-md-0 my-2 helplink"></div>                <div class="col-md-4 my-md-0 my-2">
+                    <div class="tool_dataprivacy"><a href="https://preparatoria.xutil.cu/admin/tool/dataprivacy/summary.php">Resumen de retención de datos</a></div>                </div>
+            </div>
+            <div class="row"><div class="col-12 my-md-0 my-2"></div>        </div>
+    </div>
+</footer>
+
+<div id="back-to-top"><i class="fa fa-angle-up "></i></div>
+
+</div></div><script>
+//<![CDATA[
+var require = {
+    baseUrl : 'https://preparatoria.xutil.cu/lib/requirejs.php/1728311982/',
+    // We only support AMD modules with an explicit define() statement.
+    enforceDefine: true,
+    skipDataMain: true,
+    waitSeconds : 0,
+
+    paths: {
+        jquery: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/jquery-3.6.1.min',
+        jqueryui: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/jquery/ui-1.13.2/jquery-ui.min',
+        jqueryprivate: 'https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/jquery-private'
+    },
+
+    // Custom jquery config map.
+    map: {
+      // '*' means all modules will get 'jqueryprivate'
+      // for their 'jquery' dependency.
+      '*': { jquery: 'jqueryprivate' },
+      // Stub module for 'process'. This is a workaround for a bug in MathJax (see MDL-60458).
+      '*': { process: 'core/first' },
+
+      // 'jquery-private' wants the real jQuery module
+      // though. If this line was not here, there would
+      // be an unresolvable cyclic dependency.
+      jqueryprivate: { jquery: 'jquery' }
+    }
+};
+
+//]]>
+</script>
+<script src="https://preparatoria.xutil.cu/lib/javascript.php/1728311982/lib/requirejs/require.min.js"></script>
+<script>
+//<![CDATA[
+M.util.js_pending("core/first");
+require(['core/first'], function() {
+require(['core/prefetch'])
+;
+require(["media_videojs/loader"], function(loader) {
+    loader.setUp('es');
+});;
+M.util.js_pending('theme_adaptable/adaptable'); require(['theme_adaptable/adaptable'], function(amd) {amd.init(); M.util.js_complete('theme_adaptable/adaptable');});;
+M.util.js_pending('theme_adaptable/bsoptions'); require(['theme_adaptable/bsoptions'], function(amd) {amd.init({"stickynavbar":true}); M.util.js_complete('theme_adaptable/bsoptions');});;
+M.util.js_pending('theme_adaptable/drawer'); require(['theme_adaptable/drawer'], function(amd) {amd.init(); M.util.js_complete('theme_adaptable/drawer');});;
+
+require(
+[
+    'jquery',
+],
+function(
+    $
+) {
+    var uniqid = "6722abc86677a6722abc8621032";
+    var container = $('#searchinput-navbar-' + uniqid);
+    var opensearch = container.find('[data-action="opensearch"]');
+    var input = container.find('[data-region="input"]');
+    var submit = container.find('[data-action="submit"]');
+
+    submit.on('click', function(e) {
+        if (input.val() === '') {
+            e.preventDefault();
+        }
+    });
+    container.on('hidden.bs.collapse', function() {
+        opensearch.removeClass('d-none');
+        input.val('');
+    });
+    container.on('show.bs.collapse', function() {
+        opensearch.addClass('d-none');
+    });
+    container.on('shown.bs.collapse', function() {
+        input.focus();
+    });
+});
+;
+
+;
+M.util.js_pending('core/notification'); require(['core/notification'], function(amd) {amd.init(1, []); M.util.js_complete('core/notification');});;
+M.util.js_pending('core/log'); require(['core/log'], function(amd) {amd.setConfig({"level":"trace"}); M.util.js_complete('core/log');});;
+M.util.js_pending('core/page_global'); require(['core/page_global'], function(amd) {amd.init(); M.util.js_complete('core/page_global');});;
+M.util.js_pending('core/utility'); require(['core/utility'], function(amd) {M.util.js_complete('core/utility');});
+    M.util.js_complete("core/first");
+});
+//]]>
+</script>
+<script>
+//<![CDATA[
+M.str = {"moodle":{"lastmodified":"\u00daltima modificaci\u00f3n","name":"Nombre","error":"Error","info":"Informaci\u00f3n","yes":"S\u00ed","no":"No","cancel":"Cancelar","confirm":"Confirmar","areyousure":"\u00bfEst\u00e1 seguro?","closebuttontitle":"Cerrar","unknownerror":"Error desconocido","file":"Archivo","url":"URL","collapseall":"Colapsar todo","expandall":"Expandir todo"},"repository":{"type":"Tipo","size":"Tama\u00f1o","invalidjson":"Cadena JSON no v\u00e1lida","nofilesattached":"No se han adjuntado archivos","filepicker":"Selector de archivos","logout":"Salir","nofilesavailable":"No hay archivos disponibles","norepositoriesavailable":"Lo sentimos, ninguno de sus repositorios actuales puede devolver archivos en el formato solicitado.","fileexistsdialogheader":"El archivo existe","fileexistsdialog_editor":"Un archivo con ese nombre ha sido anexado al texto que Usted est\u00e1 editando","fileexistsdialog_filemanager":"Ya ha sido anexado un archivo con ese nombre","renameto":"Cambiar el nombre a \"{$a}\"","referencesexist":"Existen {$a} enlaces a este archivo","select":"Seleccionar"},"admin":{"confirmdeletecomments":"\u00bfSeguro que quiere eliminar el\/los comentario(s) seleccionados?","confirmation":"Confirmaci\u00f3n"},"debug":{"debuginfo":"Informaci\u00f3n de depuraci\u00f3n","line":"L\u00ednea","stacktrace":"Trazado de la pila (stack)"},"langconfig":{"labelsep":":"}};
+//]]>
+</script>
+<script>
+//<![CDATA[
+(function() {Y.use("moodle-filter_mathjaxloader-loader",function() {M.filter_mathjaxloader.configure({"mathjaxconfig":"\nMathJax.Hub.Config({\n    config: [\"Accessible.js\", \"Safe.js\"],\n    errorSettings: { message: [\"!\"] },\n    skipStartupTypeset: true,\n    messageStyle: \"none\"\n});\n","lang":"es"});
+});
+M.util.help_popups.setup(Y);
+ M.util.js_pending('random6722abc8621033'); Y.on('domready', function() { M.util.js_complete("init");  M.util.js_complete('random6722abc8621033'); });
+})();
+//]]>
+</script>
+<script type="text/javascript">
+    M.util.js_pending('theme_boost/loader');
+        require(['theme_boost/loader'], function() {
+        M.util.js_complete('theme_boost/loader');
+    });
+</script>
+</body>
+</html>

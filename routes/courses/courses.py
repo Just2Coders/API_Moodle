@@ -7,6 +7,7 @@ from middlewares.validate_response import validate_response
 from jose import jwt,JWTError
 from functions import courses
 from routes.course_user_relations.course_user_relations import get_users_in_course
+from middlewares.connection import error_handler
 import requests
 import aiohttp
 import dicttoxml
@@ -23,6 +24,7 @@ async def read_courses(courseid:int|None = None,moodlewrestformat:Annotated[str,
         # ID del curso específico
     # 'options[includeoverviewfiles]': True  # Incluir archivos de resumen
     }
+    
     
     # overviews = [{"overviewsfiles": True}]
     if courseid:
@@ -153,15 +155,17 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
         parents:str = category_tarjet[0]["path"]
         parents_array = parents.split("/")
         categories =[]
-        
-        for parent in parents_array:
-            print(parent)           
-            if parent == "":
-                continue   
-            for  cat in category:
-                if cat["id"] == int(parent):
-                    categories.append(cat)
-                    break
+        if category_tarjet[0]["depth"] == 1:
+            categories.append(category_tarjet[0])
+        else:
+            for parent in parents_array:
+                print(parent)           
+                if parent == "":
+                    continue   
+                for  cat in category:
+                    if cat["id"] == int(parent):
+                        categories.append(cat)
+                        break
                     
                 
             # categories = [cat for cat in category if cat["id"] == int(parent)]
@@ -184,7 +188,97 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
         else:
             print(type(directorio))  
             return JSONResponse(content=directorio)
+@courses_router.get("/get_categories_root")
+@error_handler
+async def obtener_categorias_root():
+    params={
+    'wstoken': Xetid_token,
+    'moodlewsrestformat':"json",
+    }
+    
+    async with aiohttp.ClientSession() as session:
+        categories = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,params)  
+        response:list =[]    
+        category_root = [cat for cat in categories if  cat["depth"] == 1]  
+        for categ in category_root:
+            first_childs_Json = await obtener_categorias_first_herarchy(categ["id"])     
+            serialized_first_childs =json.loads(first_childs_Json.body.decode("utf-8")) 
+            # print("serialized")
+            # print(serialized_first_childs)
+            json_data ={"Root": categ,"Childs":serialized_first_childs["direct_childs"] }
+            response.append(json_data)
+        return JSONResponse(content={"Directory":response})
         
+@courses_router.get("/get_categories_first_herarchy/{parent}")
+@error_handler
+async def obtener_categorias_first_herarchy(parent:int):
+    params={
+    'wstoken': Xetid_token,
+    'moodlewsrestformat':"json",
+    }
+    async with aiohttp.ClientSession() as session:
+        categories = await courses.obtener_categorias_hijas(session,MOODLE_URL+MOODLE_WS_ENDPOINT,parent,params)
+        # print("categorias hijas")
+        # print(categories)
+        root = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,params,id=parent)
+        # print("categoria padre")
+        # print(root)
+        depth = root[0]["depth"]       
+        next_level = [cat for cat in categories if cat["depth"] == depth + 1]
+        # print("next_level")
+        # print(next_level)
+        # category_root = [cat for cat in categories if  cat["depth"] == 1]       
+        # return  category_root        
+        return  JSONResponse(content={"direct_childs":next_level})
+
+@courses_router.get("/get_category_by_name")
+async def obtener_categoria_by_name(name:str):
+    params_child={
+    'moodlewsrestformat':"json",
+    'wstoken':Xetid_token,
+    'wsfunction' : 'core_course_get_categories',
+    'addsubcategories': 1,
+    'criteria[0][key]': "name",
+    'criteria[0][value]': name
+    }
+   
+    async with aiohttp.ClientSession() as session:
+        async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params_child,ssl = False) as response:
+
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
+            return await response.json()
+@courses_router.get("/get_categories_childs/{parent}")
+@error_handler
+async def obtener_categorias_childs(parent:int):
+    params_childs={
+    'wstoken': Xetid_token,
+    'moodlewsrestformat':"json",
+    "criteria[0][key]":"parent",
+    'criteria[0][value]':parent
+    }
+
+    async with aiohttp.ClientSession() as session:
+        categories = await courses.obtener_categorias_hijas(session,MOODLE_URL+MOODLE_WS_ENDPOINT,parent,params_childs)
+        return categories
+@courses_router.get("/category")  
+async def obtener_categoria(id:int|None = None):
+    params={
+        "moodlewsrestformat":"json",
+        "wstoken": Xetid_token
+    }
+    params['wsfunction'] = 'core_course_get_categories'
+    params['addsubcategories']= 0
+    if id:     
+        params['criteria[0][key]']= "id"
+        params['criteria[0][value]']= id
+    async with aiohttp.ClientSession() as session:
+        async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
+            
+            respues = await response.json()
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
+        return respues
 # Función para verificar si el usuario está matriculado
 # @courses_router.get("/course_url/{course_id}")
 # def get_course_url(course_id: int):

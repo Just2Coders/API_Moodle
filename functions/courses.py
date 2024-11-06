@@ -1,20 +1,55 @@
 import aiohttp
 from fastapi import HTTPException
 
-async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict):
-    params['wsfunction'] = 'core_course_get_courses'
-    async with session.get(url, params=params,ssl =False) as response:
+async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict,course_id:int|None=None):
+    data={
+        'wsfunction':'core_course_get_courses'
+    }
+    data.update(params)
+
+    if course_id:
+        data['options[ids][0]']= course_id 
+    async with session.get(url, params=data,ssl =False) as response:
         if response.status != 200:
             raise HTTPException(status_code=response.status, detail="Error al obtener los cursos de Moodle")
-        print(response)
+        print(response.content)
         return await response.json()
 #  Obtener categorias para formar un directorio
-async def obtener_categorias(session: aiohttp.ClientSession, url: str, params: dict):
-    params['wsfunction'] = 'core_course_get_categories'
-    async with session.get(url, params=params,ssl = False) as response:
+async def obtener_categorias(session: aiohttp.ClientSession, url: str, params: dict,id:int|None = None,ids:str|None=None):
+    data ={
+        'wsfunction':'core_course_get_categories',
+        'addsubcategories': 0
+    }
+    data.update(params)
+    # params['wsfunction'] = 'core_course_get_categories'
+    # params['addsubcategories']= 0
+    if id:     
+        data['criteria[0][key]']= "id"
+        data['criteria[0][value]']= id
+    if ids:
+        data['criteria[0][key]']= "ids"
+        data['criteria[0][value]']= ids
+    async with session.get(url, params=data,ssl = False) as response:
+        respues = await response.json()
+        print(respues)
         if response.status != 200:
             raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
-        return await response.json()
+        return respues
+async def obtener_categorias_hijas(session:aiohttp.ClientSession,url:str,parent:int,params:dict):
+    params_child={
+    'wsfunction' : 'core_course_get_categories',
+    # 'addsubcategories': 1,
+    'criteria[0][key]': "parent",
+    'criteria[0][value]': parent
+    }
+    params.update(params_child)
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params,ssl = False) as response:
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
+            return await response.json()
+
 # async def obtener_directorio_categorias(session: aiohttp.ClientSession, url: str, params: dict):
 #     print(params)
 #     categoryid = params["criteria[0][value]"]

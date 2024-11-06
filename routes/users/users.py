@@ -1,8 +1,10 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE
 from globals.passwords import password
 # from globals.passwords import password
+from models.token_model import Token
 from models.user_model import User_in,UserSearch
 from typing import Annotated
 from functions.user import verify_user
@@ -10,7 +12,7 @@ from middlewares.validate_response import validate_response
 from middlewares.connection import error_handler
 from middlewares.find_userid import find_userid
 import aiohttp
-# import requests
+import requests
 # import httpx
 import json
 
@@ -62,17 +64,54 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
         "moodlewsrestformat": moodlewsrestformat
     }
     async with aiohttp.ClientSession() as session:       
-        async with session.get(xetid_url+ MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:  
+        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:  
             # data = await response.json()
             # print(data)
-            print("type")
-            print(type(response.content)) 
-            text = await response.text()
-            print("type")
-            print("content")
-            print(text)          
+            # print("type")
+            # print(type(response.content)) 
+            # text = await response.text()
+            # print("type")
+            # print("content")
+            # print(text)          
             print(response.headers.get("Content-Type"))    
             return await validate_response(response)
+        
+@user_router.get("/get_user_course_profiles")
+async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
+    params={
+        "wstoken":Xetid_token,
+        "wsfunction":"core_user_get_course_user_profiles",
+        "moodlewsrestformat": moodlewsrestformat
+    }
+    async with aiohttp.ClientSession() as session:       
+        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:  
+            # data = await response.json()
+            # print(data)
+            # print("type")
+            # print(type(response.content)) 
+            # text = await response.text()
+            # print("type")
+            # print("content")
+            # print(text)          
+            print(response.headers.get("Content-Type"))    
+            return await validate_response(response)
+@user_router.get("/token")
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+
+    payload = {
+        'username': form_data.username,
+        'password': form_data.password,
+        'service': MOODLE_SERVICE
+    }
+    response = requests.post(MOODLE_URL + MOODLE_LOGIN_ENDPOINT, data=payload)
+    print(response.content)
+    if response.status_code != 200:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    token_data = response.json()
+    print(token_data)
+    if 'token' not in token_data:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    return Token(access_token=token_data["token"], token_type="bearer")              
         
 # async def fetch_user(criteria):
 #     async with aiohttp.ClientSession() as session:

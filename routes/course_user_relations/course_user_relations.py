@@ -1,13 +1,17 @@
-from fastapi import APIRouter,HTTPException,Header,Depends
+from fastapi import APIRouter,HTTPException,Header,Depends,Path
 from fastapi.responses import JSONResponse,Response,HTMLResponse
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,local_url
+from fastapi.security import OAuth2PasswordRequestForm
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,oauth2_scheme
 from typing import Annotated
 from middlewares.connection import error_handler
 from middlewares.validate_response import  validate_response
 from middlewares.find_userid import find_userid
+from functions import courses
+from models.token_model import Token
 import aiohttp
 import requests
 import json
+import dicttoxml
 # import os
 # import httpx
 
@@ -106,9 +110,10 @@ async def get_workshops(course_id: int,moodlewsrestformat:Annotated[str,Header()
 #     async with aiohttp.ClientSession() as session:
 #         async with session.get(MOODLE_URL+MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
 #             return response.json()
-@course_user_router.post("/user/completed_courses",summary="Obtiene los cursos completados por un usuario, junto con las actividades completadas.")
+@course_user_router.get("/user/completed_courses/",summary="Obtiene los cursos completados por un usuario, junto con las actividades completadas.")
 @error_handler
 async def get_completed_courses(user_id: Annotated[str,Depends(find_userid)]):
+    print("pelfe")
     #courses_enrolled =  await 
     user_courses = await get_courses_by_user(userid=user_id)
     user_courses_serialized = json.loads(user_courses.body.decode("utf-8"))
@@ -143,7 +148,7 @@ async def get_completed_courses(user_id: Annotated[str,Depends(find_userid)]):
            
     return JSONResponse(content=response)
 
-@course_user_router.post("/course_completetion_status",summary='Obtiene el estado de finalización de un curso específico para un usuario.,Tener en cuenta que hay q configurar los criterios para la terminacion del curso')
+@course_user_router.get("/course_completion_status",summary='Obtiene el estado de finalización de un curso específico para un usuario.,Tener en cuenta que hay q configurar los criterios para la terminacion del curso')
 @error_handler
 async def get_course_completion_status(user_id:Annotated[str,Depends(find_userid)],courseid:int,moodlewsrestformat:Annotated[str,Header()]="json"):
     
@@ -160,7 +165,7 @@ async def get_course_completion_status(user_id:Annotated[str,Depends(find_userid
         print(response)
         return  await validate_response(response)
        
-@course_user_router.post("/courses_by_user",summary="Obtiene la lista de cursos a los que un usuario está matriculado")
+@course_user_router.get("/courses_by_user",summary="Obtiene la lista de cursos a los que un usuario está matriculado")
 @error_handler
 async def get_courses_by_user(userid:Annotated[str,Depends(find_userid)],moodlewsrestformat:Annotated[str,Header()]="json"):
     params ={
@@ -172,9 +177,9 @@ async def get_courses_by_user(userid:Annotated[str,Depends(find_userid)],moodlew
     async with aiohttp.ClientSession() as session:
         async with session.get(url=MOODLE_URL+MOODLE_WS_ENDPOINT,params=params,ssl=False) as response :
             return await validate_response(response)
-    print(probando)
+    
         
-@course_user_router.post("/completion_status/{course_id}",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
+@course_user_router.get("/activities_completion_status",summary="Este endpoint devuelve el estado de finalización de las actividades de un curso específico para un usuario.")
 @error_handler
 async def get_activities_completion_status(course_id: int, user_id: Annotated[str,Depends(find_userid)],moodlewsrestformat:Annotated[str,Header()]="json"):
     params = {
@@ -189,6 +194,93 @@ async def get_activities_completion_status(course_id: int, user_id: Annotated[st
             print(response)
             # completion_status = await response.json()
             return await validate_response(response)
+
+@course_user_router.get("/Obtener_archivos_by_tokenuser")
+async def obtener_archivos_single_by_token(courseid: int,Token:Annotated[str,Depends(oauth2_scheme)],moodlewsrestformat:Annotated[str,Header()]="json"):  
+    # criteria['criteria[0][key]'] = 'id'
+    # criteria['criteria[0][value]'] =course[0]["categoryid"]
+
+    params ={
+        'wstoken': Token,
+        'moodlewsrestformat': 'json',
+        'wsfunction': 'core_course_get_contents',
+        'courseid':  courseid  
+     }
+
+    print(Token)
+    directorio = []
+    # params['wsfunction'] = 'core_course_get_contents'
+    # params['courseid'] = courseid
+    async with aiohttp.ClientSession() as session:
+        criteria ={}
+        criteria.update({"wstoken":Token,"moodlewsrestformat":"json"})
+        course =  await courses.obtener_cursos(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,courseid)
+        print("course")
+        print(course)
+        print(type(course))
+        print(course[0]["categoryid"])
+        print(type(course[0]["categoryid"]))
+        id_cat = course[0]["categoryid"]
+        print(criteria)
+        category = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,id=id_cat)
+        print(category[0]["path"])
+        parents:str = category[0]["path"]
+        ids= parents.replace("/",",")
+        print(ids)
+        # print(category)
+        # parents_array = parents.split("/")
+        # str_parents = ""
+        # for parent in parents_array:
+        #     str_parents= parent + str_parents
+        categories = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,ids=ids)
+        print("categories")
+        print(categories)
+        # category_tarjet = [cat for cat in category if  cat["id"] == course[0]["categoryid"]] 
+        # print(category_tarjet)   
+
+        # categories =[]
+        # if category_tarjet[0]["depth"] == 1:
+        #     categories.append(category_tarjet[0])
+        # else:
+        #     for parent in parents_array:
+        #         print(parent)           
+        #         if parent == "":
+        #             continue   
+        #         for  cat in category:
+        #             if cat["id"] == int(parent):
+        #                 categories.append(cat)
+        #                 break
+                    
+                
+            # categories = [cat for cat in category if cat["id"] == int(parent)]
+            # print(categories) 
+
+        async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
+            if response.status != 200:
+                raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
+            print(response)
+            archivos = await response.json()
+        directorio.append({
+                'curso': course,
+                'categoria': categories,
+                'archivos': archivos
+            })
+        if moodlewsrestformat == "xml":                 
+            xml_data = dicttoxml.dicttoxml(directorio)    
+            print(type(xml_data))   
+            return Response(content=xml_data, media_type="application/xml")
+        else:
+            print(type(directorio))  
+            return JSONResponse(content=directorio)
+# @course_user_router.get("/contents")
+# async def obtener_archivos( courseid: int,session: aiohttp.ClientSession, url: str, params: dict):
+#     params['wsfunction'] = 'core_course_get_contents'
+#     params['courseid'] = courseid
+#     async with session.get(url, params=params,ssl = False) as response:
+#         if response.status != 200:
+#             raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
+#         print(response)
+#         return await response.json()
 # @course_user_router.get("/user/{user_id}/completed_courses")
 # async def get_completed_courses(user_id: int):
 #     course_completion_status = await get_course_completion_status(user_id)

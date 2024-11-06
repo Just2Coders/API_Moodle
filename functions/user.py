@@ -1,6 +1,7 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,xetid_url,Admin_token,local_url
+from typing import Annotated
+from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT
 from globals.passwords import password
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
@@ -20,16 +21,17 @@ async def verify_user(user_search: UserSearch):
     if user_search.username:
         criteria['criteria[0][key]'] = 'username'
         criteria['criteria[0][value]'] = user_search.username
-    if user_search.email:
-        criteria['criteria[1][key]'] = 'email'
-        criteria['criteria[1][value]'] = user_search.email
-    # s
+    # if user_search.email:
+    #     criteria['criteria[1][key]'] = 'email'
+    #     criteria['criteria[1][value]'] = user_search.email
+    # # s
     # Realizar la solicitud a la API de Moodle
-
+    print(user_search.username)
     # users = await fetch_user(criteria)
     async with aiohttp.ClientSession() as session:
-        async with session.post(MOODLE_URL+ MOODLE_WS_ENDPOINT, data=criteria,ssl = False) as response:  
-               
+        async with session.get(MOODLE_URL+ MOODLE_WS_ENDPOINT, params=criteria,ssl = False) as response:  
+            awaitye = await response.text()
+            print(awaitye)
             response_data = await response.json()
             print(response)    
             # response_serialized = json.loads(response_validated.body.decode("utf-8"))
