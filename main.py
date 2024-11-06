@@ -1,17 +1,19 @@
-from fastapi import FastAPI, Depends, HTTPException, status,Request
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import FastAPI, Depends, HTTPException, status,Request,Security,Header,Body
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm,APIKeyHeader
 # from pydantic import BaseModel
 from bs4 import BeautifulSoup
 from typing import Annotated
 from fastapi.responses import JSONResponse,RedirectResponse,HTMLResponse
-from jose import jwt,JWTError
-from globals.Const import MOODLE_URL,MOODLE_COURSE_URL,SECRET_KEY,Xetid_token
+# from jose import jwt,JWTError
+from globals.passwords import API_KEY,API_PASSWORD,ALGORITHM,SECRET_KEY
+from globals.Const import MOODLE_URL,MOODLE_COURSE_URL,XETID_TOKEN,API_KEY_NAME,MOODLE_WS_ENDPOINT
 from routes.course_user_relations.course_user_relations import course_user_router
 from routes.courses.courses import courses_router
 from routes.role_users.roles_users import role_user_router
 from routes.users.users import user_router
 from routes.competitions.competition import competition_user_router
 from models.token_model import Token
+# from models.api_login import api_model
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -24,12 +26,13 @@ import requests
 import json
 import time
 import aiohttp
+import jwt
 
 limiter = Limiter(key_func=get_remote_address,default_limits=["10 per minute"])
 
 # Instanciar la aplicación de FastAPI
 app = FastAPI()
-
+# oauth_to_frontend= OAuth2PasswordBearer(tokenUrl="/Acces_to_key")
 # Middleware CORS para gestionar los orígenes permitidos
 app.add_middleware(
     CORSMiddleware,
@@ -60,7 +63,7 @@ app.include_router(courses_router)
 app.include_router(competition_user_router)
 
 
-
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False) 
 
 
 MOODLE_LOGIN_URL = "https://preparatoria.xutil.cu/login/index.php"
@@ -140,24 +143,54 @@ MOODLE_COURSE_URL = "https://preparatoria.xutil.cu/course/view.php?id=7"
     
 # app = FastAPI()
 
+
+
+async def verify_api_key(api_key: str = Security(api_key_header)): 
+    if api_key != API_KEY: 
+        raise HTTPException(status_code=403, detail="Could not validate credentials") 
+    return api_key
+# @app.post("/Acces_to_key")
+# def acces_to_key(credentials:Annotated[api_model,Depends()]):
+#     print(type(credentials))
+#     to_encode = dict
+#     to_encode= to_encode(**credentials.model_dump())
+#     print(to_encode)
+#     # encoded_jwt = ""
+#     if credentials.api_key == API_KEY and credentials.api_password == API_PASSWORD:    
+#         access_token = jwt.encode(to_encode, SECRET_KEY,ALGORITHM)
+        
+# #     return encoded_jwt
+#         return {"access_token": access_token, "token_type": "bearer"}
+#     else:
+#         return HTTPException(detail="Unauthorized")
+
+# def verify_token(token:Annotated[str,Header()])
+
 @app.post("/login_key")
-async def login_key(email:str):
+async def login_key(email:str,token:Annotated[str,Depends(verify_api_key)]):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'auth_userkey_request_login_url',
         'moodlewsrestformat': 'json',
         'user[email]': email
     }
-    posteo = requests.post("https://preparatoria.xutil.cu/webservice/rest/server.php",params=params,verify=False)
-    return  posteo.content
-@app.post("/course")
-async def course():
-    course = requests.post(url="https://preparatoria.xutil.cu/auth/userkey/login.php?key=93fd62bfbe9daf0d90c0d2e13e1bbd30&wantsurl=https://preparatoria.xutil.cu/course/view.php?id=7",verify=False)
+    posteo = requests.post(MOODLE_URL+MOODLE_WS_ENDPOINT,params=params,verify=False)
+    print(posteo.content)
+    data =posteo.content.decode()
+    print(data)
+    print(type(posteo.content))
+    return data
+@app.get("/Redirect")
+async def redirect_to(wants_url:str,key_url:str):
+    course = requests.post(url=f"{key_url}&wantsurl={wants_url}",verify=False)
+# https://preparatoria.xutil.cu/course/view.php?id=7
     print(course)
+    
+    # return RedirectResponse(url=f"{key_url}&wantsurl={wants_url}")
     return HTMLResponse(content=course.content)
-@app.get("/redirect")
-async def redirect():
-    return RedirectResponse(url="https://fastapi.tiangolo.com")
+# @app.get("/redirect")
+# async def redirect():
+#     return RedirectResponse(url="https://fastapi.tiangolo.com")
 # @app.post("/login")
 # async def login():
 #     login_url = 'https://preparatoria.xutil.cu/login/index.php'

@@ -1,9 +1,9 @@
 import aiohttp
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT
+from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT
 
 async def esta_matriculado(user_id, course_id):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'core_enrol_get_enrolled_users',
         'moodlewsrestformat': 'json',
         'courseid': course_id
@@ -23,7 +23,7 @@ async def esta_matriculado(user_id, course_id):
 # Función para matricular automáticamente al usuario
 async def matricular_usuario(user_id, course_id):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'enrol_manual_enrol_users',
         'moodlewsrestformat': 'json',
         'enrolments[0][roleid]': 5,  # Estudiante

@@ -1,6 +1,6 @@
 from fastapi import APIRouter,HTTPException,Header
 from fastapi.responses import JSONResponse,Response
-from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,Xetid_token
+from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,XETID_TOKEN
 from models.course_model import Course
 from typing import List,Annotated
 from middlewares.validate_response import validate_response
@@ -18,7 +18,7 @@ courses_router = APIRouter(prefix="/Courses",tags=["Todas las rutas que involucr
 @courses_router.get("/courses")
 async def read_courses(courseid:int|None = None,moodlewrestformat:Annotated[str,Header()]="json")-> Response:
     params = {
-    'wstoken': Xetid_token,
+    'wstoken': XETID_TOKEN,
     'wsfunction': 'core_course_get_courses',
     'moodlewsrestformat': moodlewrestformat,
         # ID del curso específico
@@ -66,7 +66,7 @@ async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='j
 async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] = "xml"):
     url = f"{MOODLE_URL}/webservice/rest/server.php"
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'moodlewsrestformat': 'json'
     }
     async with aiohttp.ClientSession() as session:
@@ -100,7 +100,7 @@ async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] =
 @courses_router.get("/course-cover/{course_id}")
 async def get_course_cover(course_id: int):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': "core_course_get_courses_by_field",
         'moodlewsrestformat': 'json',
         'field': 'id',  # Buscar por el ID del curso
@@ -124,7 +124,7 @@ async def get_course_cover(course_id: int):
                 for file in course_summary_files:
                     if file['mimetype'].startswith('image/'):
                         # Devuelve la URL de la imagen con el token para acceder
-                        return {"cover_image_url": f"{file['fileurl']}?token={Xetid_token}"}
+                        return {"cover_image_url": f"{file['fileurl']}?token={XETID_TOKEN}"}
             
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
     
@@ -139,7 +139,7 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
     # criteria['criteria[0][value]'] =course[0]["categoryid"]
 
     params ={
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'moodlewsrestformat': 'json',
         'wsfunction': 'core_course_get_contents',
         'courseid':  courseid  
@@ -192,7 +192,7 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
 @error_handler
 async def obtener_categorias_root():
     params={
-    'wstoken': Xetid_token,
+    'wstoken': XETID_TOKEN,
     'moodlewsrestformat':"json",
     }
     
@@ -213,7 +213,7 @@ async def obtener_categorias_root():
 @error_handler
 async def obtener_categorias_first_herarchy(parent:int):
     params={
-    'wstoken': Xetid_token,
+    'wstoken': XETID_TOKEN,
     'moodlewsrestformat':"json",
     }
     async with aiohttp.ClientSession() as session:
@@ -235,7 +235,7 @@ async def obtener_categorias_first_herarchy(parent:int):
 async def obtener_categoria_by_name(name:str):
     params_child={
     'moodlewsrestformat':"json",
-    'wstoken':Xetid_token,
+    'wstoken':XETID_TOKEN,
     'wsfunction' : 'core_course_get_categories',
     'addsubcategories': 1,
     'criteria[0][key]': "name",
@@ -252,7 +252,7 @@ async def obtener_categoria_by_name(name:str):
 @error_handler
 async def obtener_categorias_childs(parent:int):
     params_childs={
-    'wstoken': Xetid_token,
+    'wstoken': XETID_TOKEN,
     'moodlewsrestformat':"json",
     "criteria[0][key]":"parent",
     'criteria[0][value]':parent
@@ -265,7 +265,7 @@ async def obtener_categorias_childs(parent:int):
 async def obtener_categoria(id:int|None = None):
     params={
         "moodlewsrestformat":"json",
-        "wstoken": Xetid_token
+        "wstoken": XETID_TOKEN
     }
     params['wsfunction'] = 'core_course_get_categories'
     params['addsubcategories']= 0

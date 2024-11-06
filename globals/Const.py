@@ -1,13 +1,17 @@
+import os
 from fastapi.security import OAuth2PasswordBearer
+from dotenv import load_dotenv
+load_dotenv()
 MOODLE_URL = "https://preparatoria.xutil.cu"
 MOODLE_COURSE_URL = MOODLE_URL+"/course/view.php?id="
-Xetid_token = "a01d5df2494e4a56fdc79f6a3dffaf43"
-# Admin_token = "33d51de128c8717fcbf5eac664dd7848"
+XETID_TOKEN = os.getenv('XETID_TOKEN')
 MOODLE_WS_ENDPOINT = "/webservice/rest/server.php"
-Xetid_marlon_token ="3ee63f9b64257bea14c8bf9c9912e086"
-# local_url = "http://localhost:4000"
-# xetid_url= "metnira"
-SECRET_KEY = "Cualquiera"
+XETID_MARLON_TOKEN = os.getenv('XETID_MARLON_TOKEN')
 MOODLE_LOGIN_ENDPOINT = "/login/token.php"
 MOODLE_SERVICE = "miAPI"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/User/token")
+API_KEY_NAME = "access_token"
+# local_url = "http://localhost:4000"
+# xetid_url= "metnira"
+# SECRET_KEY = "Cualquiera"
+# Admin_token = "33d51de128c8717fcbf5eac664dd7848"

@@ -1,8 +1,8 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.responses import JSONResponse,Response,RedirectResponse
 from typing import Annotated
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT
-from globals.passwords import password
+from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT
+from globals.passwords import PASSWORD
 # from globals.passwords import password
 from models.user_model import User_in,UserSearch
 from middlewares.connection import error_handler
@@ -14,7 +14,7 @@ import json
 async def verify_user(user_search: UserSearch):
     # Preparar los parámetros de búsqueda
     criteria = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'core_user_get_users',
         'moodlewsrestformat': "json",
     }

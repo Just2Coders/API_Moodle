@@ -1,8 +1,8 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.Const import Xetid_token,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE
-from globals.passwords import password
+from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE
+from globals.passwords import PASSWORD
 # from globals.passwords import password
 from models.token_model import Token
 from models.user_model import User_in,UserSearch
@@ -33,11 +33,11 @@ async def registrar_usuario(user: User_in):
 
 # Definir los parámetros de la solicitud
     params = {
-    'wstoken': Xetid_token,
+    'wstoken': XETID_TOKEN,
     'wsfunction': 'core_user_create_users',
     'moodlewsrestformat': 'json',
     'users[0][username]': user.username,
-    'users[0][password]': f"{password}{user.username}",
+    'users[0][password]': f"{PASSWORD}{user.username}",
     'users[0][firstname]': firstname(),
     'users[0][lastname]': lastname,
     'users[0][email]': user.email
@@ -59,7 +59,7 @@ async def registrar_usuario(user: User_in):
 @user_router.get("/site_info")
 async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     params={
-        "wstoken":Xetid_token,
+        "wstoken":XETID_TOKEN,
         "wsfunction":"core_webservice_get_site_info",
         "moodlewsrestformat": moodlewsrestformat
     }
@@ -79,7 +79,7 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
 @user_router.get("/get_user_course_profiles")
 async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     params={
-        "wstoken":Xetid_token,
+        "wstoken":XETID_TOKEN,
         "wsfunction":"core_user_get_course_user_profiles",
         "moodlewsrestformat": moodlewsrestformat
     }
@@ -138,7 +138,7 @@ async def verify_user_router(user_search: UserSearch):
 @user_router.get("/user-progress",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
 async def get_user_progress(user_id: Annotated[str,Depends(find_userid)]):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'gradereport_overview_get_course_grades',
         'moodlewsrestformat': 'json',
         'userid': user_id
@@ -152,7 +152,7 @@ async def get_user_progress(user_id: Annotated[str,Depends(find_userid)]):
 @user_router.get("/user-badges",summary="Este endpoint devuelve las insignias obtenidas por un usuario.")
 async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
     params = {
-        'wstoken': Xetid_token,
+        'wstoken': XETID_TOKEN,
         'wsfunction': 'core_badges_get_user_badges',
         'moodlewsrestformat': 'json',
         'userid': user_id
@@ -184,7 +184,7 @@ async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
 #     #     'createpassword':user.createpassword
 #     # }, ]
 #     # params = {
-#     #     'wstoken': Xetid_token,
+#     #     'wstoken': XETID_TOKEN,
 #     #     'wsfunction': 'core_user_create_users',
 #     #     'moodlewsrestformat': 'json',
 #     #     'users' : users[0]
@@ -192,7 +192,7 @@ async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
 #     # }
    
 #     # print(users)
-#     response = requests.post(f"{url}wstoken={Xetid_token}&wsfunction=core_user_create_users&moodlewsrestformat=json&users[0][username]={user.username}&users[0][password]={user.password}&users[0][firstname]={user.firstname}&users[0][email]={user.email}&users[0][lastname]={user.lastname}&users[0][auth]={user.auth}")
+#     response = requests.post(f"{url}wstoken={XETID_TOKEN}&wsfunction=core_user_create_users&moodlewsrestformat=json&users[0][username]={user.username}&users[0][password]={user.password}&users[0][firstname]={user.firstname}&users[0][email]={user.email}&users[0][lastname]={user.lastname}&users[0][auth]={user.auth}")
 #     if response.status_code != 200:
 #         raise HTTPException(status_code=response.status_code, detail="Error al crear el usuario en Moodle")
 #     data = response.json()
