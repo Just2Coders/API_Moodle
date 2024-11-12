@@ -1,6 +1,6 @@
-from fastapi import APIRouter,HTTPException,Header
+from fastapi import APIRouter,HTTPException,Header,Depends
 from fastapi.responses import JSONResponse,Response
-from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,XETID_TOKEN
+from globals.Const import MOODLE_URL,MOODLE_WS_ENDPOINT,XETID_TOKEN,oauth2_scheme
 from models.course_model import Course
 from typing import List,Annotated
 from middlewares.validate_response import validate_response
@@ -16,16 +16,19 @@ import time
 courses_router = APIRouter(prefix="/Courses",tags=["Todas las rutas que involucren CURSOS de Moodle"])
 
 @courses_router.get("/courses")
-async def read_courses(courseid:int|None = None,moodlewrestformat:Annotated[str,Header()]="json")-> Response:
+@error_handler
+async def read_courses(Token:Annotated[str | None, Depends(oauth2_scheme)] = None,courseid:int|None = None,moodlewrestformat:Annotated[str,Header()]="json")-> Response:
+    print("token")
+    print(Token)
     params = {
-    'wstoken': XETID_TOKEN,
+    'wstoken': Token if Token else XETID_TOKEN,
     'wsfunction': 'core_course_get_courses',
     'moodlewsrestformat': moodlewrestformat,
         # ID del curso específico
     # 'options[includeoverviewfiles]': True  # Incluir archivos de resumen
     }
-    
-    
+    if Token != XETID_TOKEN and Token != None:
+        params["wstoken"]= Token
     # overviews = [{"overviewsfiles": True}]
     if courseid:
         params.update({'options[ids][0]': courseid })
@@ -45,6 +48,7 @@ async def read_courses(courseid:int|None = None,moodlewrestformat:Annotated[str,
     
 
 @courses_router.get("/courses/search", response_model=List[dict])
+@error_handler
 async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='json'):
     courses = await read_courses(moodlewrestformat="json")
     courses = json.loads(courses.body)
@@ -61,8 +65,8 @@ async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='j
 
 #  Obtener los cursos para formar un directorio
 
-
 @courses_router.get("/obtener_directorio",response_description="Lista de diccionarios,cada uno contiene curso,categoria y archivos",response_model=list|bytes, )
+@error_handler
 async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] = "xml"):
     url = f"{MOODLE_URL}/webservice/rest/server.php"
     params = {
@@ -98,6 +102,7 @@ async def obtener_directorio(moodlewrestformat:Annotated[str | None, Header()] =
     
         
 @courses_router.get("/course-cover/{course_id}")
+@error_handler
 async def get_course_cover(course_id: int):
     params = {
         'wstoken': XETID_TOKEN,
@@ -129,6 +134,7 @@ async def get_course_cover(course_id: int):
             return {"message": "Imagen de portada no encontrada o curso sin imagen."}
     
 @courses_router.get("/Obtener_archivos")
+@error_handler
 async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str,Header()]="json"):
     course =  await read_courses(courseid)
     print(course)
@@ -188,6 +194,8 @@ async def obtener_archivos_single(courseid: int,moodlewsrestformat:Annotated[str
         else:
             print(type(directorio))  
             return JSONResponse(content=directorio)
+
+
 @courses_router.get("/get_categories_root")
 @error_handler
 async def obtener_categorias_root():
@@ -232,6 +240,7 @@ async def obtener_categorias_first_herarchy(parent:int):
         return  JSONResponse(content={"direct_childs":next_level})
 
 @courses_router.get("/get_category_by_name")
+@error_handler
 async def obtener_categoria_by_name(name:str):
     params_child={
     'moodlewsrestformat':"json",
@@ -248,6 +257,7 @@ async def obtener_categoria_by_name(name:str):
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al obtener las categorías de Moodle")
             return await response.json()
+
 @courses_router.get("/get_categories_childs/{parent}")
 @error_handler
 async def obtener_categorias_childs(parent:int):
@@ -261,7 +271,9 @@ async def obtener_categorias_childs(parent:int):
     async with aiohttp.ClientSession() as session:
         categories = await courses.obtener_categorias_hijas(session,MOODLE_URL+MOODLE_WS_ENDPOINT,parent,params_childs)
         return categories
+
 @courses_router.get("/category")  
+@error_handler
 async def obtener_categoria(id:int|None = None):
     params={
         "moodlewsrestformat":"json",

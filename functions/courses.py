@@ -1,6 +1,6 @@
 import aiohttp
 from fastapi import HTTPException
-
+import json
 async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict,course_id:int|None=None):
     data={
         'wsfunction':'core_course_get_courses'
@@ -10,6 +10,9 @@ async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict,
     if course_id:
         data['options[ids][0]']= course_id 
     async with session.get(url, params=data,ssl =False) as response:
+        # course_serialized
+        # if response.status == 200 and response["excpection"]:
+        #     raise HTTPException(status_code=response.status, detail=response)
         if response.status != 200:
             raise HTTPException(status_code=response.status, detail="Error al obtener los cursos de Moodle")
         print(response.content)

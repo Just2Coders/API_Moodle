@@ -44,9 +44,6 @@ async def enrol_user_in_course(user_id:Annotated[str,Depends(find_userid)], cour
     # except aiohttp.ClientConnectionError as e:
     #     raise HTTPException(status_code=502,detail="Ha fallado la conexion con el servidor Moodle")
 
-           
-    
-
 @course_user_router.get("/get_users_in_course",summary="Este endpoint obtiene la lista de usuarios matriculados en un curso específico")
 @error_handler
 async def get_users_in_course(course_id:int,moodlewrestformat:Annotated[str,Header()]="json"):
@@ -66,6 +63,7 @@ async def get_users_in_course(course_id:int,moodlewrestformat:Annotated[str,Head
             print(response.status)
             print(response.headers.get("Content-Type"))
             return await validate_response(response)
+
 @course_user_router.get("/mod_workshop_get_grades",summary="Obtiene las calificaciones de un taller (workshop).,Se necesita primero Ver los workshops para sacar el id")
 @error_handler
 async def get_grades(workshop_id: int,moodlewsrestformat:Annotated[str,Header()]="json")->Response:
@@ -196,10 +194,11 @@ async def get_activities_completion_status(course_id: int, user_id: Annotated[st
             return await validate_response(response)
 
 @course_user_router.get("/Obtener_archivos_by_tokenuser")
+@error_handler
 async def obtener_archivos_single_by_token(courseid: int,Token:Annotated[str,Depends(oauth2_scheme)],moodlewsrestformat:Annotated[str,Header()]="json"):  
     # criteria['criteria[0][key]'] = 'id'
     # criteria['criteria[0][value]'] =course[0]["categoryid"]
-
+    
     params ={
         'wstoken': Token,
         'moodlewsrestformat': 'json',
@@ -214,51 +213,26 @@ async def obtener_archivos_single_by_token(courseid: int,Token:Annotated[str,Dep
     async with aiohttp.ClientSession() as session:
         criteria ={}
         criteria.update({"wstoken":Token,"moodlewsrestformat":"json"})
+        print()
         course =  await courses.obtener_cursos(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,courseid)
-        print("course")
         print(course)
-        print(type(course))
-        print(course[0]["categoryid"])
-        print(type(course[0]["categoryid"]))
         id_cat = course[0]["categoryid"]
         print(criteria)
+        
         category = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,id=id_cat)
+        print(category)
         print(category[0]["path"])
         parents:str = category[0]["path"]
         ids= parents.replace("/",",")
         print(ids)
-        # print(category)
-        # parents_array = parents.split("/")
-        # str_parents = ""
-        # for parent in parents_array:
-        #     str_parents= parent + str_parents
         categories = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,criteria,ids=ids)
-        print("categories")
+
+        # filter_categories 
         print(categories)
-        # category_tarjet = [cat for cat in category if  cat["id"] == course[0]["categoryid"]] 
-        # print(category_tarjet)   
-
-        # categories =[]
-        # if category_tarjet[0]["depth"] == 1:
-        #     categories.append(category_tarjet[0])
-        # else:
-        #     for parent in parents_array:
-        #         print(parent)           
-        #         if parent == "":
-        #             continue   
-        #         for  cat in category:
-        #             if cat["id"] == int(parent):
-        #                 categories.append(cat)
-        #                 break
-                    
-                
-            # categories = [cat for cat in category if cat["id"] == int(parent)]
-            # print(categories) 
-
         async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params,ssl = False) as response:
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al obtener los archivos de Moodle")
-            print(response)
+ 
             archivos = await response.json()
         directorio.append({
                 'curso': course,

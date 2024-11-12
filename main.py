@@ -144,7 +144,6 @@ MOODLE_COURSE_URL = "https://preparatoria.xutil.cu/course/view.php?id=7"
 # app = FastAPI()
 
 
-
 async def verify_api_key(api_key: str = Security(api_key_header)): 
     if api_key != API_KEY: 
         raise HTTPException(status_code=403, detail="Could not validate credentials") 
@@ -165,7 +164,12 @@ async def verify_api_key(api_key: str = Security(api_key_header)):
 #         return HTTPException(detail="Unauthorized")
 
 # def verify_token(token:Annotated[str,Header()])
-
+# @app.get("/cesaaa")
+# async def ver_cosas(request:Request):
+#     print(request.headers)
+#     print(request.cookies)
+#     print(request.client)
+#     return ("esa")
 @app.post("/login_key")
 async def login_key(email:str,token:Annotated[str,Depends(verify_api_key)]):
     params = {
@@ -180,14 +184,15 @@ async def login_key(email:str,token:Annotated[str,Depends(verify_api_key)]):
     print(data)
     print(type(posteo.content))
     return data
-@app.get("/Redirect")
-async def redirect_to(wants_url:str,key_url:str):
-    course = requests.post(url=f"{key_url}&wantsurl={wants_url}",verify=False)
-# https://preparatoria.xutil.cu/course/view.php?id=7
-    print(course)
+
+# @app.get("/Redirect")
+# async def redirect_to(wants_url:str,key_url:str):
+#     course = requests.post(url=f"{key_url}&wantsurl={wants_url}",verify=False)
+# # https://preparatoria.xutil.cu/course/view.php?id=7
+#     print(course)
     
-    # return RedirectResponse(url=f"{key_url}&wantsurl={wants_url}")
-    return HTMLResponse(content=course.content)
+#     return RedirectResponse(url=f"{key_url}&wantsurl={wants_url}")
+    # return HTMLResponse(content=course.content)
 # @app.get("/redirect")
 # async def redirect():
 #     return RedirectResponse(url="https://fastapi.tiangolo.com")

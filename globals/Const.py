@@ -9,7 +9,7 @@ MOODLE_WS_ENDPOINT = "/webservice/rest/server.php"
 XETID_MARLON_TOKEN = os.getenv('XETID_MARLON_TOKEN')
 MOODLE_LOGIN_ENDPOINT = "/login/token.php"
 MOODLE_SERVICE = "miAPI"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/User/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/User/token",auto_error=False)
 API_KEY_NAME = "access_token"
 # local_url = "http://localhost:4000"
 # xetid_url= "metnira"

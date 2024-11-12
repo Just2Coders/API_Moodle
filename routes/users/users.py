@@ -57,6 +57,7 @@ async def registrar_usuario(user: User_in):
             # return await verify_user(usersearch)
   
 @user_router.get("/site_info")
+@error_handler
 async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     params={
         "wstoken":XETID_TOKEN,
@@ -77,6 +78,7 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
             return await validate_response(response)
         
 @user_router.get("/get_user_course_profiles")
+@error_handler
 async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     params={
         "wstoken":XETID_TOKEN,
@@ -95,9 +97,14 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
             # print(text)          
             print(response.headers.get("Content-Type"))    
             return await validate_response(response)
-@user_router.get("/token")
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
+@user_router.post("/token")
+@error_handler
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    # print(form_data)
+    # if form_data == None:
+    # #     token_data = None
+    # else:
     payload = {
         'username': form_data.username,
         'password': form_data.password,
@@ -135,7 +142,9 @@ async def verify_user_router(user_search: UserSearch):
     # if not user:
     #     raise HTTPException(status_code=404, detail="User not found")   
     # return user
+
 @user_router.get("/user-progress",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
+@error_handler
 async def get_user_progress(user_id: Annotated[str,Depends(find_userid)]):
     params = {
         'wstoken': XETID_TOKEN,
@@ -150,6 +159,7 @@ async def get_user_progress(user_id: Annotated[str,Depends(find_userid)]):
             return {"user_grades": grades}
 
 @user_router.get("/user-badges",summary="Este endpoint devuelve las insignias obtenidas por un usuario.")
+@error_handler
 async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
     params = {
         'wstoken': XETID_TOKEN,
