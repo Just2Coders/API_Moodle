@@ -51,10 +51,7 @@ async def registrar_usuario(user: User_in):
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="Error al crear el usuario en Moodle")
             data = await response.json()
-            print(data)
-            # usersearch = UserSearch(**data[0])
-            # print(usersearch)
-            # return await verify_user(usersearch)
+
   
 @user_router.get("/site_info")
 @error_handler
@@ -66,14 +63,6 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
     }
     async with aiohttp.ClientSession() as session:       
         async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:  
-            # data = await response.json()
-            # print(data)
-            # print("type")
-            # print(type(response.content)) 
-            # text = await response.text()
-            # print("type")
-            # print("content")
-            # print(text)          
             print(response.headers.get("Content-Type"))    
             return await validate_response(response)
         
@@ -132,16 +121,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 @user_router.post("/verify_user")
 @error_handler
 async def verify_user_router(user_search: UserSearch):
-    # Preparar los parámetros de búsqueda
     return  await verify_user(user_search)
-                
-            
-            
-
-            
-    # if not user:
-    #     raise HTTPException(status_code=404, detail="User not found")   
-    # return user
 
 @user_router.get("/user-progress",summary="Este endpoint devuelve las calificaciones de los cursos en los que un usuario está matriculado.")
 @error_handler
@@ -174,37 +154,3 @@ async def get_user_badges(user_id: Annotated[str,Depends(find_userid)]):
             return {"user_badges": badges}
         
 
-
-
-
-
-
-
-# @user_router.post("/registrar_usuario")
-# def registrar_usuario(user: User):
-#     url = f"{MOODLE_URL}/webservice/rest/server.php?"
-#     # 53 hasta 71 noooo
-#     # users = [{
-#     #     'username': user.username,
-#     #     'password': user.password,
-#     #     'firstname': user.firstname,
-#     #     'lastname': user.lastname,
-#     #     'email': user.email,
-#     #     'auth': user.auth,
-#     #     'createpassword':user.createpassword
-#     # }, ]
-#     # params = {
-#     #     'wstoken': XETID_TOKEN,
-#     #     'wsfunction': 'core_user_create_users',
-#     #     'moodlewsrestformat': 'json',
-#     #     'users' : users[0]
-    
-#     # }
-   
-#     # print(users)
-#     response = requests.post(f"{url}wstoken={XETID_TOKEN}&wsfunction=core_user_create_users&moodlewsrestformat=json&users[0][username]={user.username}&users[0][password]={user.password}&users[0][firstname]={user.firstname}&users[0][email]={user.email}&users[0][lastname]={user.lastname}&users[0][auth]={user.auth}")
-#     if response.status_code != 200:
-#         raise HTTPException(status_code=response.status_code, detail="Error al crear el usuario en Moodle")
-#     data = response.json()
-#     print(data)
-#     return(data)
