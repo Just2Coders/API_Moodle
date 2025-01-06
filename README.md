@@ -20,7 +20,7 @@ Clone the repository:
 
 bash
 Copiar código
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/Just2Coders/API_Moodle.git
 cd your-repository
 Create a virtual environment and install dependencies:
 
