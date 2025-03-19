@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse,Response
 import aiohttp
 
 async def validate_response(response:aiohttp.ClientResponse):
-    
     if response.status!= 200:
         raise HTTPException(status_code=response.status, detail=aiohttp.ClientResponseError)
     if response.headers.get('Content-Type').startswith('application/json'):

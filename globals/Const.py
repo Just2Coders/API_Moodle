@@ -11,6 +11,7 @@ MOODLE_LOGIN_ENDPOINT = "/login/token.php"
 MOODLE_SERVICE = "miAPI"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/User/token",auto_error=False)
 API_KEY_NAME = "access_token"
+ACCOUNT_TYPE = os.getenv("ACCOUNT_TYPE")
 # local_url = "http://localhost:4000"
 # xetid_url= "metnira"
 # SECRET_KEY = "Cualquiera"

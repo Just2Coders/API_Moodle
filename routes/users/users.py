@@ -1,8 +1,9 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE
+from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE,ACCOUNT_TYPE
 from globals.passwords import PASSWORD
+from sqlmodel import field
 # from globals.passwords import password
 from models.token_model import Token
 from models.user_model import User_in,UserSearch
@@ -40,7 +41,7 @@ async def registrar_usuario(user: User_in):
     'users[0][password]': f"{PASSWORD}{user.username}",
     'users[0][firstname]': firstname(),
     'users[0][lastname]': lastname,
-    'users[0][email]': user.email
+    'users[0][email]': user.email  
     # "users[0][roleid]": user.roleid,
     # "users[0][contextid]":user.contextid
     }
@@ -98,20 +99,17 @@ async def get_site_info(moodlewsrestformat:Annotated[str,Header()]="json"):
             print(response.headers.get("Content-Type"))    
             return await validate_response(response)
 
-@user_router.post("/token")
+@user_router.post("/token",summary="Autenticar a un usuario a los servicios web")
 @error_handler
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    # print(form_data)
-    # if form_data == None:
-    # #     token_data = None
-    # else:
     payload = {
         'username': form_data.username,
         'password': form_data.password,
         'service': MOODLE_SERVICE
     }
-    response = requests.post(MOODLE_URL + MOODLE_LOGIN_ENDPOINT, data=payload)
-    print(response.content)
+    print(payload)
+    response = requests.post(MOODLE_URL + MOODLE_LOGIN_ENDPOINT, data=payload,verify=False)
+    # print(response)
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     token_data = response.json()

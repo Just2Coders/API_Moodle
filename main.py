@@ -32,15 +32,7 @@ limiter = Limiter(key_func=get_remote_address,default_limits=["10 per minute"])
 
 # Instanciar la aplicación de FastAPI
 app = FastAPI()
-# oauth_to_frontend= OAuth2PasswordBearer(tokenUrl="/Acces_to_key")
-# Middleware CORS para gestionar los orígenes permitidos
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Solo permitir orígenes de confianza
-    allow_credentials=True,
-    allow_methods=["*"],  # Métodos permitidos
-    allow_headers=["*"],
-)
+
 
 # Agregar middleware de SlowAPI para manejar rate limiting global
 app.state.limiter = limiter
@@ -53,6 +45,15 @@ async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
         content={"detail": "Rate limit exceeded. Try again later."},
         status_code=429
 )
+ # Middleware CORS para gestionar los orígenes permitidos
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Solo permitir orígenes de confianza
+    allow_credentials=True,
+    allow_methods=["*"],  # Métodos permitidos
+    allow_headers=["*"],
+)
+    
 
 
 app.description = "Moodle_Ticket_API"
@@ -66,8 +67,7 @@ app.include_router(competition_user_router)
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False) 
 
 
-MOODLE_LOGIN_URL = "https://preparatoria.xutil.cu/login/index.php"
-MOODLE_COURSE_URL = "https://preparatoria.xutil.cu/course/view.php?id=7"
+
 
 # @app.post("/login_and_redirect")
 # async def login_and_redirect(username:str,password:str):

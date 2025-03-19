@@ -19,6 +19,7 @@ async def obtener_cursos(session: aiohttp.ClientSession, url: str, params: dict,
         return await response.json()
 #  Obtener categorias para formar un directorio
 async def obtener_categorias(session: aiohttp.ClientSession, url: str, params: dict,id:int|None = None,ids:str|None=None):
+    print(type(id))
     data ={
         'wsfunction':'core_course_get_categories',
         'addsubcategories': 0
@@ -27,12 +28,15 @@ async def obtener_categorias(session: aiohttp.ClientSession, url: str, params: d
     # params['wsfunction'] = 'core_course_get_categories'
     # params['addsubcategories']= 0
     if id:     
+        print("poniniendo ids")
         data['criteria[0][key]']= "id"
         data['criteria[0][value]']= id
     if ids:
         data['criteria[0][key]']= "ids"
         data['criteria[0][value]']= ids
+    print(data)
     async with session.get(url, params=data,ssl = False) as response:
+        print(response)
         respues = await response.json()
         print(respues)
         if response.status != 200:

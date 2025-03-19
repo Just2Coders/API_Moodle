@@ -17,28 +17,52 @@ courses_router = APIRouter(prefix="/Courses",tags=["Todas las rutas que involucr
 
 @courses_router.get("/courses")
 @error_handler
-async def read_courses(Token:Annotated[str | None, Depends(oauth2_scheme)] = None,courseid:int|None = None,moodlewrestformat:Annotated[str,Header()]="json")-> Response:
-    print("token")
-    print(Token)
+async def read_courses(Token:Annotated[str | None, Depends(oauth2_scheme)] = None
+                       ,courseid:int|None = None
+                       ,moodlewrestformat:Annotated[str,Header()]="json")-> Response:
     params = {
-    'wstoken': Token if Token else XETID_TOKEN,
-    'wsfunction': 'core_course_get_courses',
-    'moodlewsrestformat': moodlewrestformat,
-        # ID del curso específico
-    # 'options[includeoverviewfiles]': True  # Incluir archivos de resumen
+        'wstoken': XETID_TOKEN,
+        'wsfunction': 'core_course_get_courses',
+        'moodlewsrestformat': moodlewrestformat,
+    }
+    category_params ={
+"wstoken":XETID_TOKEN,"moodlewsrestformat":"json"
+    }
+    photo_params = {
+        'wstoken': XETID_TOKEN,
+        'wsfunction': "core_course_get_courses_by_field",
+        'moodlewsrestformat': 'json',
+        'field': 'id',  # Buscar por el ID del curso
     }
     if Token != XETID_TOKEN and Token != None:
         params["wstoken"]= Token
     # overviews = [{"overviewsfiles": True}]
     if courseid:
         params.update({'options[ids][0]': courseid })
-        
+    directory=[]      
     try:
         async with aiohttp.ClientSession() as session:
-            print("sadasdasdas")
-            async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:
-                print(response)
-                return await validate_response(response)
+            async with session.get(MOODLE_URL + MOODLE_WS_ENDPOINT, params=params, ssl=False) as response:               
+                courses_response = await response.json()               
+                for course in courses_response:
+                    if course["categoryid"] == 0:
+                        continue
+                    catetegory_id = course["categoryid"]
+                    print(course["shortname"])                  
+                    category = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,category_params,id=catetegory_id)                   
+                    # print(category[0]["path"])
+                    parents:str = category[0]["path"]
+                    ids= parents.replace("/",",")
+                    # print(ids)
+                    categories = await courses.obtener_categorias(session,MOODLE_URL+MOODLE_WS_ENDPOINT,category_params,ids=ids)
+                    photo_params.update({"value":course["id"]})
+                    foto = await get_course_cover(course_id=course["id"])
+                    directory.append({
+                'course': course,
+                'categories': categories,
+                'photo': foto
+ })            
+                return directory
     except aiohttp.ClientConnectorError as e:
         print(f"Connection error: {e}")
         return Response(content="Connection error", status_code=500)
@@ -50,10 +74,10 @@ async def read_courses(Token:Annotated[str | None, Depends(oauth2_scheme)] = Non
 @courses_router.get("/courses/search", response_model=List[dict])
 @error_handler
 async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='json'):
-    courses = await read_courses(moodlewrestformat="json")
-    courses = json.loads(courses.body)
-    print(courses)
-    filtered_courses = [course for course in courses if query.lower() in course["fullname"].lower()]
+    courses_read = await read_courses(moodlewrestformat="json")
+    filtered_courses = [course for course in courses_read if query.lower() in course["course"]["fullname"].lower()]
+    print("filtered_courses")
+    print(filtered_courses)
     course_list =[course for course in filtered_courses]
     if moodlewrestformat == "xml":       
         import dicttoxml
@@ -63,7 +87,6 @@ async def search_courses(query: str,moodlewrestformat:Annotated[str,Header()]='j
     else:
         return JSONResponse(content=course_list)
 
-#  Obtener los cursos para formar un directorio
 
 @courses_router.get("/obtener_directorio",response_description="Lista de diccionarios,cada uno contiene curso,categoria y archivos",response_model=list|bytes, )
 @error_handler

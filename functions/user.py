@@ -24,7 +24,6 @@ async def verify_user(user_search: UserSearch):
     # if user_search.email:
     #     criteria['criteria[1][key]'] = 'email'
     #     criteria['criteria[1][value]'] = user_search.email
-    # # s
     # Realizar la solicitud a la API de Moodle
     print(user_search.username)
     # users = await fetch_user(criteria)
