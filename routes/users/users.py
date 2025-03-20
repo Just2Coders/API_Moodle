@@ -1,9 +1,8 @@
 from fastapi import APIRouter,HTTPException,Header,Depends,Query
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse,Response,RedirectResponse
-from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE,ACCOUNT_TYPE
+from globals.Const import XETID_TOKEN,MOODLE_URL,MOODLE_WS_ENDPOINT,MOODLE_LOGIN_ENDPOINT,MOODLE_SERVICE
 from globals.passwords import PASSWORD
-from sqlmodel import field
 # from globals.passwords import password
 from models.token_model import Token
 from models.user_model import User_in,UserSearch
